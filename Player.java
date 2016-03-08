@@ -14,10 +14,11 @@ public class Player {
     private int health;
     private int knowledge;
     private int money;
+    private String name;
     private int progression;
     private Roommate[] roommates;
     
-    public Player(int degreeLength, int money, Roommate[] roommates) {
+    public Player(int degreeLength, int money, String name, Roommate[] roommates) {
         alcohol = 0;
         books = 0;
         this.degreeLength = degreeLength;
@@ -26,6 +27,7 @@ public class Player {
         health = 100;
         knowledge = 0;
         this.money = money;
+        this.name = name;
         progression = 0;
         this.roommates = roommates;
     }
@@ -60,6 +62,10 @@ public class Player {
     
     public int getMoney(){
         return money;
+    }
+    
+    public String getPlayerName(){
+        return name;
     }
     
     public int getProgression(){
