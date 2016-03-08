@@ -160,15 +160,7 @@ public class College {
         //write this.
     }
     
-    public static int readNum(int maxLegal, String display){
-        Scanner scan = new Scanner(System.in);
-        String s = scan.nextLine().trim();
-        while(s.length() != 1 || Integer.parseInt(s) <1 || Integer.parseInt(s)>maxLegal ){
-           System.out.println("Enter a valid input between 1 and " + maxLegal);
-           s = scan.nextLine().trim();
-        }
-        return Integer.parseInt(s);
-        /*
+    public static int readNum(int limit, String display){
         Scanner scan = new Scanner(System.in);
         while(true) {
             if(scan.hasNextInt()){
@@ -180,7 +172,7 @@ public class College {
             String badInput = scan.nextLine();
             System.out.println(display);
             
-        }*/
+        }
     }
     public static void playBlackJack(Player p){
        Minigame m = new Blackjack(p);
