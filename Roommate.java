@@ -9,6 +9,9 @@ public class Roommate {
     private String name;
     private boolean isAlive;
     
+    public Roommate(String name){
+       this(name,true);
+    }
     public Roommate(String name, boolean isAlive) {
         this.name = name;
         this.isAlive = isAlive;

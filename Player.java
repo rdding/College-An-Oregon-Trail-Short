@@ -72,7 +72,7 @@ public class Player {
         return progression;
     }
     
-    public Roommate[] getRoommate(int index){
+    public Roommate getRoommate(int index){
         return roommates[index];
     }
     
