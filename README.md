@@ -1,2 +1,2 @@
 # College-An-Oregon-Trail-Short
-Oregon Trail based game
+Oregon Trail based game.
