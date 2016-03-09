@@ -50,20 +50,110 @@ public class Studying implements Minigame{
       //based on level the number of operators will change
       //also note that number will get larger given the higher levels
       char   [] operators = new char[level];
-      String [] operands  = new String[level+1];
+      double [] operands  = new double [level+1];
+      
+      //load operators
       if(level <5){
          for(int i = 0; i<operators.length;i++){
             int rand = (int) (Math.random() * 2);
-            
+            if(rand == 0){
+               operators[i] = '+';
+            }else{
+               operators[i] = '-';
+            }           
          }
       }else{
          for(int i = 0; i<operators.length;i++){
-            //fill operators with random values ( + or - or * or /)
+            int rand = (int) (Math.random() * 4);
+            if(rand == 0){
+               operators[i] = '+';
+            }else if(rand ==2){
+               operators[i] = '-';
+            }else if(rand ==3){
+               operators[i] = '*';
+            }else{
+               operators[i] = '/';
+            }
+         }
+         //load operands
+         for(int i = 0; i<operands.length; i++){
+            operands[i] = (int) (Math.random()*(5 * level));
+         }
+         printMathProblem(operators, operands);
+         double solution = 0;
+         String value = "";
+         try{
+            solution = getSolution(operators, operands);
+         }catch(RuntimeException ex){
+            //I will throw this if there is an error - Divide by zero
+            value = "ERROR";
+         }
+         if(!value.equals("ERROR")){
+            value = solution + "";
+         }
+         getOptions(value, level);
+      }  
+   }
+   private double getSolution(char [] operators, double [] operands){
+      boolean isBaseCase = true;
+      if(operators == null || operators.length == 0){
+         return operands[0];
+      }
+      if(operators.length == 1){
+         if(operands[0] == '+'){
+            return operands[0] + operands[1];
+         }else if (operands[0] == '-'){
+            return operands[0] - operands[1];
+         }else if (operands[0] == '*'){
+            return operands[0] * operands[1];
+         }else{//must be divisor
+            return operands[0] / operands[1];
          }
       }
-      
+      for(int i = 0; i<operators.length;i++){
+         if(operators[i] == '+' || operators[i]== '-'){
+            isBaseCase = false;
+            break;
+         }
+      }
+      if(isBaseCase){
+         double answer = operands[0];
+         for(int i = 0; i< operators.length; i++){
+            if(operators[i] == '+'){
+               answer += operands[i+1];
+            }else if(operators[i] == '-'){
+               answer -= operands[i+1];
+            }
+         }
+         return answer;
+      }else{
+         int multDivCount = 0;
+         for(int i = 0; i<operators.length;i++){
+            if(operators[i] == '+' || operators[i] == '-'){
+               multDivCount++;
+            }
+         }
+         char [] recurOperators = new char [operators.length-multDivCount];
+         double [] recurOperands  = new double  [operands.length-multDivCount]; 
+         int orPtr =0;
+         int andPtr=0;
+         for(int i = 0; i<operators.length; i++){
+            if(operators[i]== '*' || operators[i] == '/'){
+               double temp = 0;
+               if(operators[i] == '*'){
+                  //compute
+               }else{
+                  
+               }
+               
+            }else{
+               //do not compute the + or - yet
+            }
+         }
+         return getSolution(recurOperators, recurOperands);
+      }
    }
-   private void printMathProblem (char [] operators, String [] operands){
+   private void printMathProblem (char [] operators, double [] operands){
       System.out.println("Evaluate...");
       System.out.print("(" + operators[0] + ") ");
       for(int i = 0; i<operands.length; i++){
@@ -72,7 +162,7 @@ public class Studying implements Minigame{
       }
    }
    //more level will result in more option
-   private String [] getOptions(long realValue, int level){
+   private String [] getOptions(String realValue, int level){
       return null;
    }
 
