@@ -6,19 +6,18 @@ import java.util.Scanner;
 
 public class Blackjack implements Minigame{
 
-   /* Note:Fields of Player
-    private int money;
-    p.setMoney(int n);
-    p.getMoney();
-    */
    private Player p;
    private Card [] deck;
    final static int deckLength = 52;
    private int startingCapital;
+   private int handsPlayed;
+   private long startTime;
    
    public Blackjack(Player p){
       this.p = p;
       startingCapital = p.getMoney();
+      handsPlayed = 0;
+      startTime = System.currentTimeMillis();
       makeDeck();
       System.out.println("Welcome to Blackjack");
    }
@@ -53,6 +52,9 @@ public class Blackjack implements Minigame{
    @Override
    public void start() {
       if(p != null && deck != null){
+         if(!canPlay()){
+            this.exit();
+         }
          this.shuffle();
          System.out.println("--Deck Shuffled--");
          int bet = getBet();
@@ -80,6 +82,8 @@ public class Blackjack implements Minigame{
             if(this.getHighScore(dealerHand) == 21 && dealerHand.size() == 2){
                outcome = 2;
                System.out.println("Dealer Had Blackjack - Instant Lose");
+               System.out.println("Dealer Hand: 21");
+               printHand(dealerHand);
                break;
             }
             System.out.print("Hit or Stand? (H|S) ");
@@ -87,8 +91,8 @@ public class Blackjack implements Minigame{
             if(validInput == 'H'){
                System.out.println("Player - Hit");
                playerHand.add(deck[cardPtr++]);
-               if(getLowScore(playerHand)>21){
-                  System.out.print("You went over. BUST");
+               if(getLowScore(dealerHand)>21){
+                  System.out.println("You went over. BUST");
                   outcome = 2;
                   break;
                }
@@ -96,6 +100,12 @@ public class Blackjack implements Minigame{
                endOfGame = true;
                printOpenHands(dealerHand,playerHand);
                while(this.getHighScore(dealerHand)<17){
+                  if(getLowScore(dealerHand)>21){
+                     printOpenHands(dealerHand,playerHand); 
+                     System.out.println("Dealer went over. DEALER BUST");
+                     outcome = 1;
+                     break;
+                  }
                   dealerHand.add(deck[cardPtr++]);
                   printOpenHands(dealerHand,playerHand);                
                }
@@ -107,10 +117,8 @@ public class Blackjack implements Minigame{
                   outcome = 0;
                }else{
                   outcome = 2;
-               }
-               
+               }               
             }
-            
          }while(!endOfGame);
          modifyPlayerWealth(outcome,bet);
          System.out.println("Would You Like to Play Again? (Y|N)");
@@ -126,7 +134,26 @@ public class Blackjack implements Minigame{
 
    @Override
    public void exit() {
-      // TODO Auto-generated method stub
+      System.out.println("--------------------------------------------------");
+      System.out.println("--------------------------------------------------");
+      long durationSeconds = (System.currentTimeMillis() -startTime)/1000;
+      long dif = ((long) p.getMoney()) - ( (long) startingCapital);
+      System.out.println("You played " + handsPlayed + " hands.");
+      if(dif>0){
+         String s = "You gained +" + dif + " dollars!";
+         if(dif == 1) s = "You gained +" + dif + " dollar!";
+         System.out.println(s);
+      }else if(dif<0){
+         String s = "You lost -" + dif + " dollars!";
+         if(dif == -1) s = "You lost -" + dif + " dollar!";
+         System.out.println(s);
+      }else{
+         System.out.println("No change in bankroll!");
+      }
+      printTimeStats(durationSeconds);
+      System.out.println("--------------------------------------------------");
+      System.out.println("------------------Leaving Casino------------------");
+      System.out.println("--------------------------------------------------");
       
    }
    private int getBet(){
@@ -143,7 +170,7 @@ public class Blackjack implements Minigame{
          verifyInt = new Scanner(s);
       }
       int wager = verifyInt.nextInt();
-      if(wager<0 || wager>p.getMoney()){
+      if(wager<=0 || wager>p.getMoney()){
          System.out.println("ILLEGAL WAGER");
          return getBet();
       }
@@ -247,6 +274,7 @@ public class Blackjack implements Minigame{
    //2 - Player Wins
    //3 - Blackjack
    private void modifyPlayerWealth(int outcome, int bet){
+      handsPlayed++;
       int delta = 0;
       if(outcome == 0){
          System.out.println("PUSH - no change in bankroll");
@@ -312,6 +340,31 @@ public class Blackjack implements Minigame{
          return low;
       }
       return high;
+   }
+   
+   private void printTimeStats(long seconds){
+      String s = "";
+      if(seconds<60){
+         s = "You've played " + seconds + " seconds.";
+      }else if(seconds<3600){
+         s = "You've played " + seconds/60 + " minutes and " + seconds%60 +" seconds";
+      }else{
+         long hours = seconds/3600;
+         s = "You've played " + hours + " hours" + seconds/60 + " minutes and "
+         + seconds%60 +" seconds";
+      }
+      System.out.println(s);
+   }
+   private boolean canPlay(){
+      if(p.getMoney()<=0){
+         System.out.println("TOO POOR TO PLAY");
+         return false;
+      }
+      if(p.getMoney()>Integer.MAX_VALUE/3){
+         System.out.println("TOO MUCH MONEY TO PLAY");
+         return false;
+      }
+      return true;
    }
    
    //CARD INNER CLASS
