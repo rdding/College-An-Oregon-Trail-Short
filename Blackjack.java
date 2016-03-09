@@ -344,7 +344,9 @@ public class Blackjack implements Minigame{
    
    private void printTimeStats(long seconds){
       String s = "";
-      if(seconds<60){
+      if(seconds == 1){
+         s = "You've played 1 second.";
+      }else if(seconds<60){
          s = "You've played " + seconds + " seconds.";
       }else if(seconds<3600){
          s = "You've played " + seconds/60 + " minutes and " + seconds%60 +" seconds";
