@@ -157,7 +157,72 @@ public class College {
     }
     
     public static void shop(Player player){
-        //write this.
+        int alcohol = 0;
+        int books = 0;
+        int drugs = 0;
+        int food = 0;
+        int total = 0;
+        boolean buying = true;
+        while(buying){
+            System.out.println("Trying to buy shit?");
+            System.out.println("------------------------------");
+            System.out.println("    1. Alcohol $" +alcohol);
+            System.out.println("    2. Books   $" +books);
+            System.out.println("    3. Drugs   $" +drugs);
+            System.out.println("    4. Food    $" +food);
+            System.out.println("------------------------------");
+            System.out.println("   Total bill: $" +total);
+            System.out.println();
+            System.out.println("Your sad savings: $" +player.getMoney());
+            System.out.println("What are you trying to hustle?");
+            System.out.println("Type '5' when you're done, filthy capitalist.");
+            int response = readNum(5, "Congratulations, you played yourself.");
+            if (response == 1){
+                System.out.println()
+                System.out.println("How many metric booze?($10 each, limit 24)");
+                total -= alcohol;
+                alcohol = 10 * readNum(24, "PICK A CORRECT NUMBER OF BOOZE, FUCKFACE.");
+                total += alcohol;
+            } else if(response == 2) {
+                System.out.println();
+                System.out.println("How many books, nerd?($75 each, limit 5)");
+                total -= books;
+                books = 75 * readNum(5, "PICK A CORRECT NUMBER OF BOOKS, NERD.");
+                total += books;
+            } else if(response == 3) {
+                System.out.println();
+                System.out.println("WOOO TIME TO GET COKED UP.($20 each, limit 20)");
+                total -= drugs;
+                drugs = 20 * readNum(20, "OH SHIT YOU'RE HIGHER THAN A KITE, ENTER A REAL NUMBER");
+                total += drugs;
+            } else if(response == 4) {
+                System.out.println();
+                System.out.println("GO GET WASTED INSTEAD.($5 each, limit 100)");
+                total -= drugs;
+                food = 5 * readNum(100, "DOES THIS LOOK LIKE COSTCO TO YOU?");
+                total += drugs;
+            } else {
+                if(total == 0){
+                    System.out.println("I BET YOU'RE A COMMUNIST LIKE BERNIE SANDLERS.")
+                    return;
+                } else {
+                    if(total > player.getMoney()){
+                        System.out.println("YOU'RE POOR AS SHIT.");
+                        System.out.println("You have have been thrown out of the University Store.")
+                        return;
+                    } else {
+                        buying = false;
+                        break;
+                    }
+                }
+            }
+        }
+        player.setAlcohol(player.getAlcohol() + alcohol/10);
+        player.setBooks(player.getBooks() + books/75);
+        player.setDrugs(player.getDrugs() + drugs/20);
+        player.setFood(player.getFood() + food/5);
+        player.setMoney(player.getMoney() - total);
+        System.out.println("Nice job blowing your savings, dickhead.");
     }
     
     public static int readNum(int limit, String display){
