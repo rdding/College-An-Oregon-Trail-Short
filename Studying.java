@@ -1,9 +1,10 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Studying implements Minigame{
 
-   private static final int MATH = 1;/*//not built yet
-   private static final int VOCAB = 2;
+   private static final int MATH = 1;
+   private static final int VOCAB = 2;/*not built yet
    private static final int FLANG = 3;
    private static final int POT=4;*/
    
@@ -22,17 +23,27 @@ public class Studying implements Minigame{
    @Override
    public void start() {
       printStudyOptions();    
-      int studyChoice = College.readNum(1, "What would you like to study???");
+      int studyChoice = College.readNum(2, "What would you like to study???");
+      System.out.println("How hard do you want to study (1-10)");
       int level = College.readNum(10, "What level would you like to study at???");
+      System.out.println("How many problems do you want to do???");
       int problemCount = College.readNum(10, "How many problems would you like to do???");
+      recieved = problemCount;
       if(studyChoice == MATH){
          while(problemCount>0){
+            System.out.println("--------------------------------");
+            System.out.println("Here is problem " + (recieved-problemCount+1));
             learnMath(level);
             problemCount--;
          }
-      }/*else if(studyChoice == VOCAB){ //NOT BUILT YET
-         
-      }else if(studyChoice == FLANG){
+      }else if(studyChoice == VOCAB){ //NOT BUILT YET
+         while(problemCount>0){
+            System.out.println("--------------------------------");
+            System.out.println("Here is problem " + (recieved-problemCount+1));
+            //MAKE A CALL TO LEARN VOCAB ->WILL SIMPLY BE COPYING DOWN A WORD AND TYPING
+            problemCount--;
+         }
+      }/*else if(studyChoice == FLANG){
          
       }else if(studyChoice == POT){
          
@@ -43,6 +54,7 @@ public class Studying implements Minigame{
    //level directly effects the number of operators in there
    //precondition that level is between 1 and 10
    private void learnMath(int level){
+      //System.out.println("LEVEL IS " + level);
       if(level <1){
          level = 1;         
       }else if(level>10){
@@ -52,8 +64,10 @@ public class Studying implements Minigame{
       //also note that number will get larger given the higher levels
       char   [] operators = new char[level];
       double [] operands  = new double [level+1];
-      
+      //System.out.println("CHECKPOINT");
       //load operators
+      //System.out.println(operators.length);
+      //System.out.println(operands.length);
       if(level <5){
          for(int i = 0; i<operators.length;i++){
             int rand = (int) (Math.random() * 2);
@@ -61,7 +75,8 @@ public class Studying implements Minigame{
                operators[i] = '+';
             }else{
                operators[i] = '-';
-            }           
+            }  
+            //System.out.println(Arrays.toString(operators));
          }
       }else{
          for(int i = 0; i<operators.length;i++){
@@ -76,45 +91,51 @@ public class Studying implements Minigame{
                operators[i] = '/';
             }
          }
-         //load operands
-         for(int i = 0; i<operands.length; i++){
-            operands[i] = (int) (Math.random()*(5 * level));
-         }
-         printMathProblem(operators, operands);
-         double solution = 0;
-         String value = "";
-         try{
-            solution = getSolution(operators, operands);
-         }catch(RuntimeException ex){
-            //I will throw this if there is an error - Divide by zero
-            value = "ERROR";
-         }
-         if(!value.equals("ERROR")){
-            value = solution + "";
-         }
-         String [] displayedOptions = getOptions(value, level);
-         printOptions(displayedOptions);
-         int correctIndex = getIndexRightAnswer(value, displayedOptions);
-         Scanner myScanner = new Scanner(System.in);
-         System.out.println("so tell me the answer...");
-         String letter = myScanner.nextLine().trim().toUpperCase();
-         char firstLet=0;
-         if(letter.length()>0){
-            firstLet = letter.charAt(0);
-         }
-         while(letter.length() != 1 || (firstLet-'A')<0 ||firstLet-'A'>displayedOptions.length ){
-            System.out.println("no relly, tell me the answer...");
-            letter = myScanner.nextLine().trim().toUpperCase();
-         }
-         if(letter.charAt(0) == ('A'+correctIndex)){
-            System.out.println("CORRECT: GOOD JOB");
-            correct++;
-            giveStudy(level);
-         }else{
-            System.out.println("WRONG: BAD BAD");
-            System.out.println("The correct answer was" + ((char)('A'+correctIndex)));
-         }
-      }  
+      }
+    //System.out.println("CHECKPOINT");
+      //load operands
+      for(int i = 0; i<operands.length; i++){
+         operands[i] = (int) (Math.random()*(5 * level));
+      }
+      //System.out.println("HELLLLO");
+      printMathProblem(operators, operands);
+      //System.out.println(Arrays.toString(operators));
+      //System.out.println(Arrays.toString(operands));
+      double solution = 0;
+      String value = "";
+      try{
+         solution = getSolution(operators, operands);
+      }catch(RuntimeException ex){
+         System.out.println(ex.getMessage());
+         ex.printStackTrace();
+         //I will throw this if there is an error - Divide by zero
+         value = "ERROR";
+      }
+      if(!value.equals("ERROR")){
+         value = solution + "";
+      }
+      String [] displayedOptions = getOptions(value, level);
+      printOptions(displayedOptions);
+      int correctIndex = getIndexRightAnswer(value, displayedOptions);
+      Scanner myScanner = new Scanner(System.in);
+      System.out.println("so tell me the answer...");
+      String letter = myScanner.nextLine().trim().toUpperCase();
+      char firstLet=0;
+      if(letter.length()>0){
+         firstLet = letter.charAt(0);
+      }
+      while(letter.length() != 1 || (firstLet-'A')<0 ||firstLet-'A'>displayedOptions.length ){
+         System.out.println("no relly, tell me the answer...");
+         letter = myScanner.nextLine().trim().toUpperCase();
+      }
+      if(letter.charAt(0) == ('A'+correctIndex)){
+         System.out.println("CORRECT: GOOD JOB");
+         correct++;
+         giveStudy(level);
+      }else{
+         System.out.println("WRONG: BAD BAD");
+         System.out.println("The correct answer was" + ((char)('A'+correctIndex)));
+      }
    }
    private void giveStudy(int n){
       p.setKnowledge(p.getKnowledge()+n);
@@ -125,9 +146,10 @@ public class Studying implements Minigame{
       for(int i = 0; i<arr.length; i++){
          String temp = arr[i];
          char option = (char)('A' + i);
-         if(arr[i].indexOf('.') !=-1){//means decimate present in sequence
-            temp += "000";
-            System.out.println(option + ". " + temp.substring(0, temp.indexOf('.' +3)));
+         if(temp.indexOf('.') != -1){//means decimate present in sequence
+            temp += "0000";
+            temp = temp.substring(0, temp.indexOf('.')+3);
+            System.out.println(option + ". " + temp);
          }else{
             System.out.println(option + ". " + temp);
          }
@@ -137,25 +159,26 @@ public class Studying implements Minigame{
       boolean isBaseCase = true;
       if(operators == null || operators.length == 0){
          return operands[0];
-      }
+      }//Works only for level 1 problems or extremely simplified problems
       if(operators.length == 1){
-         if(operands[0] == '+'){
+         if(operators[0] == '+'){
             return operands[0] + operands[1];
-         }else if (operands[0] == '-'){
+         }else if (operators[0] == '-'){
             return operands[0] - operands[1];
-         }else if (operands[0] == '*'){
+         }else if (operators[0] == '*'){
             return operands[0] * operands[1];
          }else{//must be divisor
             return operands[0] / operands[1];
          }
       }
+      //////////////////////////////////////
       for(int i = 0; i<operators.length;i++){
-         if(operators[i] == '+' || operators[i]== '-'){
+         if(operators[i] == '*' || operators[i]== '/'){
             isBaseCase = false;
             break;
          }
       }
-      if(isBaseCase){
+      if(isBaseCase){ //Can evaluate easily
          double answer = operands[0];
          for(int i = 0; i< operators.length; i++){
             if(operators[i] == '+'){
@@ -165,10 +188,13 @@ public class Studying implements Minigame{
             }
          }
          return answer;
+         ///////////////////////////////////////Note the code appears to be working
+         //up to this point. Note errors arise after this point when we try
+         //to trivialize the problem and then recompute the solution
       }else{
          int multDivCount = 0;
          for(int i = 0; i<operators.length;i++){
-            if(operators[i] == '+' || operators[i] == '-'){
+            if(operators[i] == '*' || operators[i] == '/'){
                multDivCount++;
             }
          }
@@ -191,24 +217,37 @@ public class Studying implements Minigame{
                recurOperands [andPtr++] = operands[i];
             }
          }
+         recurOperands[andPtr] = operands[operands.length-1];
+         printMathProblem(recurOperators, recurOperands);
          return getSolution(recurOperators, recurOperands);
       }
    }
    private void printMathProblem (char [] operators, double [] operands){
       System.out.println("Evaluate...");
-      System.out.print("(" + operators[0] + ") ");
-      for(int i = 0; i<operands.length; i++){
-         System.out.print(operands[i]);
-         System.out.print(" ("+ operators[i+1] +") ");         
+      System.out.print("(" + operands[0] + ") ");
+      for(int i = 0; i<operators.length; i++){
+         System.out.print(operators[i]);
+         System.out.print(" ("+ operands[i+1] +") ");         
       }
+      System.out.println();
    }
    //more level will result in more option
    private String [] getOptions(String realValue, int level){
       int chances = level + 4;
+      if(realValue.equals("ERROR")){
+         String [] multiples = new String[chances];
+         multiples[0] = "ERROR";
+         for(int i = 1; i< chances; i++){
+            multiples[i] = ""+(int) ((Math.random()*1000)-500);
+         }
+         shuffle(multiples);
+         return multiples;
+      }
       double answer =  Double.parseDouble(realValue);
       String [] multiples = new String[chances];
       multiples[0] = realValue+"";
-      for(int i =1; i<chances; i++){
+      multiples[1] = "ERROR"; //Psuedo error
+      for(int i =2; i<chances; i++){
          double sol = answer + (Math.random() * 40)-20;
          String val = sol +"";
          while(contains(multiples, val)){
@@ -256,7 +295,7 @@ public class Studying implements Minigame{
       System.out.println("----------YOUR STUDY SESSION IS COMPLETE----------");
       long timeDif = (System.currentTimeMillis() - startTime) /1000;
       printTimeStats(timeDif);
-      System.out.print("You correctly answered " + correct +" out of " + recieved + "problems!!!");
+      System.out.println("You correctly answered " + correct +" out of " + recieved + " problems!!!");
       int knowledge = p.getKnowledge();
       if(recieved != 0){
          int percent = (correct/recieved)*100;
@@ -281,8 +320,9 @@ public class Studying implements Minigame{
    }
    
    private void printStudyOptions(){
-      System.out.println("1. MATH");/*Not built yet
-      System.out.println("2. VOCABULARY");
+      System.out.println("Choose Something to Study:");
+      System.out.println("1. MATH");
+      System.out.println("2. VOCABULARY");/*Not built yet
       System.out.println("3. FOREIGN LANGUAGES");
       System.out.println("4. POTPOURRI ");*/
    }
