@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Studying implements Minigame{
 
@@ -91,8 +92,46 @@ public class Studying implements Minigame{
          if(!value.equals("ERROR")){
             value = solution + "";
          }
-         getOptions(value, level);
+         String [] displayedOptions = getOptions(value, level);
+         printOptions(displayedOptions);
+         int correctIndex = getIndexRightAnswer(value, displayedOptions);
+         Scanner myScanner = new Scanner(System.in);
+         System.out.println("so tell me the answer...");
+         String letter = myScanner.nextLine().trim().toUpperCase();
+         char firstLet=0;
+         if(letter.length()>0){
+            firstLet = letter.charAt(0);
+         }
+         while(letter.length() != 1 || (firstLet-'A')<0 ||firstLet-'A'>displayedOptions.length ){
+            System.out.println("no relly, tell me the answer...");
+            letter = myScanner.nextLine().trim().toUpperCase();
+         }
+         if(letter.charAt(0) == ('A'+correctIndex)){
+            System.out.println("CORRECT: GOOD JOB");
+            correct++;
+            giveStudy(level);
+         }else{
+            System.out.println("WRONG: BAD BAD");
+            System.out.println("The correct answer was" + ((char)('A'+correctIndex)));
+         }
       }  
+   }
+   private void giveStudy(int n){
+      p.setKnowledge(p.getKnowledge()+n);
+   }
+   
+   //Method to print options with truncation
+   private void printOptions (String [] arr){
+      for(int i = 0; i<arr.length; i++){
+         String temp = arr[i];
+         char option = (char)('A' + i);
+         if(arr[i].indexOf('.') !=-1){//means decimate present in sequence
+            temp += "000";
+            System.out.println(option + ". " + temp.substring(0, temp.indexOf('.' +3)));
+         }else{
+            System.out.println(option + ". " + temp);
+         }
+      }
    }
    private double getSolution(char [] operators, double [] operands){
       boolean isBaseCase = true;
@@ -141,13 +180,15 @@ public class Studying implements Minigame{
             if(operators[i]== '*' || operators[i] == '/'){
                double temp = 0;
                if(operators[i] == '*'){
-                  //compute
+                  //compute the value of tmep
+                  temp = operands[i] *operands[i+1];
                }else{
-                  
+                  temp = operands[i] / operands[i+1];
                }
-               
+               operands[i+1] = temp;
             }else{
-               //do not compute the + or - yet
+               recurOperators[orPtr++] = operators[i];
+               recurOperands [andPtr++] = operands[i];
             }
          }
          return getSolution(recurOperators, recurOperands);
@@ -163,7 +204,49 @@ public class Studying implements Minigame{
    }
    //more level will result in more option
    private String [] getOptions(String realValue, int level){
-      return null;
+      int chances = level + 4;
+      double answer =  Double.parseDouble(realValue);
+      String [] multiples = new String[chances];
+      multiples[0] = realValue+"";
+      for(int i =1; i<chances; i++){
+         double sol = answer + (Math.random() * 40)-20;
+         String val = sol +"";
+         while(contains(multiples, val)){
+            sol = answer + (Math.random() * 40)-20;
+            val = sol+"";
+         }
+         multiples[i] = val;
+      }
+      shuffle(multiples);
+      return multiples;
+      //Returns a list of possible solutions with the real value shuffled
+   }
+   private boolean contains(String [] repo, String val){
+      if(repo == null){
+         return false;
+      }
+      for(int i = 0; i<repo.length; i++){
+         if(val.equals(repo[i])){
+            return true;
+         }
+      }
+      return false;
+   }
+   private void shuffle(String [] arr){
+      for(int i = 0; i<arr.length; i++){
+         int rand = (int) (Math.random() * arr.length);
+         String temp = arr[rand];
+         arr[rand] = arr[i];
+         arr[i] = temp;
+      }
+   }
+   private int getIndexRightAnswer(String answer, String [] arr){
+      for(int i = 0; i< arr.length; i++){
+         if(answer.equals(arr[i])){
+            return i;
+         }
+      }
+      return -1;
    }
 
    @Override
@@ -219,5 +302,4 @@ public class Studying implements Minigame{
       }
       System.out.println(s);
    }
-
 }
