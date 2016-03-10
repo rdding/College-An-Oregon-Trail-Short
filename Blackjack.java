@@ -318,7 +318,7 @@ public class Blackjack implements Minigame{
       printHand(playerHand);
       System.out.println("--------------------------------------------------");
    }
-   private char getValidChar(char []arr){
+   private static char getValidChar(char []arr){
       Scanner myScanner = new Scanner(System.in);
       String s = myScanner.nextLine().trim().toUpperCase();
       while(s.length() != 1){
