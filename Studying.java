@@ -1,8 +1,11 @@
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Studying implements Minigame{
-
+   
+   private static final String filePathDic = "WordList.txt";
    private static final int MATH = 1;
    private static final int VOCAB = 2;/*not built yet
    private static final int FLANG = 3;
@@ -37,10 +40,26 @@ public class Studying implements Minigame{
             problemCount--;
          }
       }else if(studyChoice == VOCAB){ //NOT BUILT YET
+         ArrayList<String> words = new ArrayList<String>();
+         File f = new File (filePathDic);
+         try{
+            Scanner myScanner = new Scanner(f);
+            
+            while(myScanner.hasNext()){
+               String s= myScanner.next();
+               s = s.toUpperCase().trim();
+               if(s.length() == (level+3) ){ //only add words of a given size
+                  words.add(s);   
+               }
+            }
+            myScanner.close();
+         }catch(Exception ex){}
          while(problemCount>0){
             System.out.println("--------------------------------");
             System.out.println("Here is problem " + (recieved-problemCount+1));
-            //MAKE A CALL TO LEARN VOCAB ->WILL SIMPLY BE COPYING DOWN A WORD AND TYPING
+            int rand =  (int) (Math.random() * words.size() );
+            String randomWord = words.get(rand);
+            learnVocab(randomWord,level);
             problemCount--;
          }
       }/*else if(studyChoice == FLANG){
@@ -341,5 +360,46 @@ public class Studying implements Minigame{
          + seconds%60 +" seconds";
       }
       System.out.println(s);
+   }
+   ////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////VOCAB
+   ////////////////////////////////////////////////
+   private void learnVocab(String s, int level){
+      String capped = "";
+      for(int i = 0; i<s.length(); i++){
+         int rand = (int) (Math.random()*2);
+         if(rand ==0){
+            capped+=s.charAt(i);
+         }else{
+            capped+=(char)(s.charAt(i)-'A' +'a');
+         }
+      }
+      System.out.println("TYPE \"" + capped +"\" Exactly...(without the quotes)");
+      Scanner myScanner = new Scanner(System.in);
+      String userInput = myScanner.nextLine().trim();
+      if(userInput.equals(capped)){
+         System.out.println("CONGRATULATIONS, you did it right");
+         giveStudy(level);
+         correct++;
+      }else{
+         System.out.println("WRONG WRONG WRONG");
+         printDiffs(userInput, capped);
+      }
+   } 
+   private void printDiffs(String input, String expect){
+      if(input.length() != expect.length()){
+         System.out.println("\tInput Len: " + input.length() + " Expected Len: "+expect.length());
+      }
+      for(int i = 0; i<Math.min(input.length(), expect.length());i++){
+         if(input.charAt(i) != expect.charAt(i)){
+            System.out.println("\tDiff at char " + i + " Expected: '" + expect.charAt(i) +"'"
+                  + " Input: '" + input.charAt(i) + "'");
+         }
+      }
+      if(input.length() >expect.length()){
+         System.out.println("\tExtra chars in input: " + input.substring(expect.length()));
+      }else if(input.length()<expect.length()){
+         System.out.println("\tMissing traling chars: " + expect.substring(input.length())); 
+      }
    }
 }
