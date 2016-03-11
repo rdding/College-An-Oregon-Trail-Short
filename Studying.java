@@ -383,4 +383,4 @@ public class Studying implements Minigame{
          System.out.println("\tMissing traling chars: " + expect.substring(input.length())); 
       }
    }
-}
+}//github you playing games with me
