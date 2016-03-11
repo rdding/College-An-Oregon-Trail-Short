@@ -33,14 +33,14 @@ public class College {
         }
         /////////////////////////////////////
         Player player = new Player(degreeLength, money, playerName, roommates);
-        System.out.println("Before you get fucked by an unstable financial future");
+        System.out.println("\nBefore you get fucked by an unstable financial future");
         System.out.println("you should blow all your money on booze and cocaine.");
         System.out.println("You have $" +player.getMoney() + " in cash.");
         shop(player);
     }
     
     private static void welcome(){
-        System.out.println("COLLEGE: A VULGAR OREGON TRAIL ADVENTURE\n");
+        System.out.println("\nCOLLEGE: A VULGAR OREGON TRAIL ADVENTURE\n");
         System.out.println("You may:");
         System.out.println("    1. GET FUCKED BY STUDENT LOANS");
         System.out.println("    2. LEARN ABOUT GETTING FUCKED BY STUDENT LOANS");
@@ -50,7 +50,7 @@ public class College {
     
     private static void welcomeCaller(){
         welcome();
-        int choice = readNum(3, "What is your choice?");
+        int choice = readNum(3, "\nWhat is your choice?");
         if (choice == 2) {
             gameInfo();
             welcomeCaller();
@@ -60,7 +60,7 @@ public class College {
     }
     
     private static void gameInfo(){
-        System.out.println("DO YOU ENJOY BEING FILTHY RICH?");
+        System.out.println("\nDO YOU ENJOY BEING FILTHY RICH?");
         System.out.println("DO YOU ENJOY BEING DEBT FREE?");
         System.out.println("DO YOU ENJOY A LIFE FREE OF STUDYING?");
         System.out.println("DO YOU ENJOY BEING SOBER?");
@@ -70,17 +70,16 @@ public class College {
     
     private static int characterSelect(){
         displayRoles();
-        int choice = readNum(4, "What is your choice?");
+        int choice = readNum(4, "\nWhat is your choice?");
         if(choice == 4){
             roleInfo();
-            characterCreate();
-        } else {
-            return choice;
+            characterSelect();
         }
+        return choice;
     }
     
     private static void displayRoles() {
-       System.out.println("WHAT DEGREE DO YOU WANT WHEN YOU DIE?")
+       System.out.println("\nWHAT DEGREE DO YOU WANT WHEN YOU DIE?");
        System.out.println("   1. Computer Science");
        System.out.println("   2. AgriBusiness");
        System.out.println("   3. English");   
@@ -93,9 +92,9 @@ public class College {
         boolean isCorrect = true;
         
         while(isCorrect) {
-            System.out.println("What is your legal name?(Verified via NSA databases)");
+            System.out.println("\nWhat is your legal name?(Verified via NSA databases)");
             name = scan.nextLine();
-            System.out.println("Is this name correct? " +name);
+            System.out.println("\nIs this name correct? " +name+ "\n");
             String response = scan.nextLine();
             if(response.equals("yes") || response.equals("Yes") || response.equals("y") || 
                response.equals("YES")) {
@@ -106,33 +105,33 @@ public class College {
     }
   
     private static void roleInfo(){
-        System.out.println("Computer Science: FILTHY RICH BUT COLLEGE TAKES FOREVER")
+        System.out.println("\nComputer Science: FILTHY RICH BUT COLLEGE TAKES FOREVER");
         System.out.println("Agribusiness: YOU'RE A FUCKING FARMER. MEDIOCRE EVERYTHING");
-        System.out.println("English: WHY WOULD YOU DO THIS? BROKE AS FUCK.")
+        System.out.println("English: WHY WOULD YOU DO THIS? BROKE AS FUCK.");
     }
     
     private static Roommate[] roommateCreate(){
         String name1, name2, name3;
 
         Scanner scan = new Scanner(System.in);
-        System.out.println("What are the names of your roommates?");
+        System.out.println("\nWhat are the names of your roommates?");
         System.out.println("    1. ");
         System.out.println("    2. ");
         System.out.println("    3. ");
         name1 = scan.nextLine().trim();
-        System.out.println("What are the names of your roommates?");
+        System.out.println("\nWhat are the names of your roommates?");
         System.out.println("    1. " +name1);
         System.out.println("    2. ");
         System.out.println("    3. ");
         name2 = scan.nextLine().trim();
-        System.out.println("What are the names of your roommates?");
+        System.out.println("\nWhat are the names of your roommates?");
         System.out.println("    1. " +name1);
         System.out.println("    2. " +name2);
         System.out.println("    3. ");
         name3 = scan.nextLine().trim();
 
         while(true){
-            System.out.println("Are these names correct?");
+            System.out.println("\nAre these names correct?");
             System.out.println("    1. " +name1);
             System.out.println("    2. " +name2);
             System.out.println("    3. " +name3);
@@ -168,7 +167,7 @@ public class College {
         int total = 0;
         boolean buying = true;
         while(buying){
-            System.out.println("Trying to buy shit?");
+            System.out.println("\nTrying to buy shit?");
             System.out.println("------------------------------");
             System.out.println("    1. Alcohol $" +alcohol);
             System.out.println("    2. Books   $" +books);
@@ -182,7 +181,7 @@ public class College {
             System.out.println("Type '5' when you're done, filthy capitalist.");
             int response = readNum(5, "Congratulations, you played yourself.");
             if (response == 1){
-                System.out.println()
+                System.out.println();
                 System.out.println("How many metric booze?($10 each, limit 24)");
                 total -= alcohol;
                 alcohol = 10 * readNum(24, "PICK A CORRECT NUMBER OF BOOZE, FUCKFACE.");
@@ -207,12 +206,12 @@ public class College {
                 total += drugs;
             } else {
                 if(total == 0){
-                    System.out.println("I BET YOU'RE A COMMUNIST LIKE BERNIE SANDLERS.")
+                    System.out.println("\nI BET YOU'RE A COMMUNIST LIKE BERNIE SANDLERS.");
                     return;
                 } else {
                     if(total > player.getMoney()){
-                        System.out.println("YOU'RE POOR AS SHIT.");
-                        System.out.println("You have have been thrown out of the University Store.")
+                        System.out.println("\nYOU'RE POOR AS SHIT.");
+                        System.out.println("You have have been thrown out of the University Store.");
                         return;
                     } else {
                         buying = false;
@@ -226,7 +225,7 @@ public class College {
         player.setDrugs(player.getDrugs() + drugs/20);
         player.setFood(player.getFood() + food/5);
         player.setMoney(player.getMoney() - total);
-        System.out.println("Nice job blowing your savings, dickhead.");
+        System.out.println("\nNice job blowing your savings, dickhead.");
     }
     
     public static int readNum(int limit, String display){
