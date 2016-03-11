@@ -34,7 +34,7 @@ public class College {
         /////////////////////////////////////
         Player player = new Player(degreeLength, money, playerName, roommates);
         System.out.println("Before you get fucked by an unstable financial future");
-        System.out.println("you should blow all your money on kegs and cocaine.");
+        System.out.println("you should blow all your money on booze and cocaine.");
         System.out.println("You have $" +player.getMoney() + " in cash.");
         shop(player);
     }
@@ -60,11 +60,12 @@ public class College {
     }
     
     private static void gameInfo(){
-        //WRITETHIS
-        //display screen by screen in the oregon trail style
-        //need to figure out how to progress with button press
-        //ex. press space to continue
-        //we can also cut out that part and display all the info in one chunk
+        System.out.println("DO YOU ENJOY BEING FILTHY RICH?");
+        System.out.println("DO YOU ENJOY BEING DEBT FREE?");
+        System.out.println("DO YOU ENJOY A LIFE FREE OF STUDYING?");
+        System.out.println("DO YOU ENJOY BEING SOBER?");
+        System.out.println("TOO FUCKING BAD");
+        System.out.println("WELCOME TO COLLEGE, FUCKER");
     }
     
     private static int characterSelect(){
@@ -79,9 +80,10 @@ public class College {
     }
     
     private static void displayRoles() {
-       System.out.println("   1. Rich but long degree");
-       System.out.println("   2. Middle class and average degree");
-       System.out.println("   3. Poor and short degree");   
+       System.out.println("WHAT DEGREE DO YOU WANT WHEN YOU DIE?")
+       System.out.println("   1. Computer Science");
+       System.out.println("   2. AgriBusiness");
+       System.out.println("   3. English");   
    }
 
    private static String nameSelect(){
@@ -104,7 +106,9 @@ public class College {
     }
   
     private static void roleInfo(){
-        //see gameInfo() comments
+        System.out.println("Computer Science: FILTHY RICH BUT COLLEGE TAKES FOREVER")
+        System.out.println("Agribusiness: YOU'RE A FUCKING FARMER. MEDIOCRE EVERYTHING");
+        System.out.println("English: WHY WOULD YOU DO THIS? BROKE AS FUCK.")
     }
     
     private static Roommate[] roommateCreate(){
