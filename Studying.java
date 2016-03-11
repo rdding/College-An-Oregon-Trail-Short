@@ -7,9 +7,7 @@ public class Studying implements Minigame{
    
    private static final String filePathDic = "WordList.txt";
    private static final int MATH = 1;
-   private static final int VOCAB = 2;/*not built yet
-   private static final int FLANG = 3;
-   private static final int POT=4;*/
+   private static final int VOCAB = 2;
    
    private Player p;
    private long startTime;
@@ -62,18 +60,12 @@ public class Studying implements Minigame{
             learnVocab(randomWord,level);
             problemCount--;
          }
-      }/*else if(studyChoice == FLANG){
-         
-      }else if(studyChoice == POT){
-         
-      }//should make a call to one of these options before exiting.
-      */
+      }
       exit();
    }
    //level directly effects the number of operators in there
    //precondition that level is between 1 and 10
    private void learnMath(int level){
-      //System.out.println("LEVEL IS " + level);
       if(level <1){
          level = 1;         
       }else if(level>10){
@@ -83,10 +75,7 @@ public class Studying implements Minigame{
       //also note that number will get larger given the higher levels
       char   [] operators = new char[level];
       double [] operands  = new double [level+1];
-      //System.out.println("CHECKPOINT");
       //load operators
-      //System.out.println(operators.length);
-      //System.out.println(operands.length);
       if(level <5){
          for(int i = 0; i<operators.length;i++){
             int rand = (int) (Math.random() * 2);
@@ -95,7 +84,6 @@ public class Studying implements Minigame{
             }else{
                operators[i] = '-';
             }  
-            //System.out.println(Arrays.toString(operators));
          }
       }else{
          for(int i = 0; i<operators.length;i++){
@@ -111,15 +99,11 @@ public class Studying implements Minigame{
             }
          }
       }
-    //System.out.println("CHECKPOINT");
       //load operands
       for(int i = 0; i<operands.length; i++){
          operands[i] = (int) (Math.random()*(5 * level));
       }
-      //System.out.println("HELLLLO");
       printMathProblem(operators, operands);
-      //System.out.println(Arrays.toString(operators));
-      //System.out.println(Arrays.toString(operands));
       double solution = 0;
       String value = "";
       try{
@@ -237,7 +221,6 @@ public class Studying implements Minigame{
             }
          }
          recurOperands[andPtr] = operands[operands.length-1];
-         printMathProblem(recurOperators, recurOperands);
          return getSolution(recurOperators, recurOperands);
       }
    }
@@ -341,9 +324,7 @@ public class Studying implements Minigame{
    private void printStudyOptions(){
       System.out.println("Choose Something to Study:");
       System.out.println("1. MATH");
-      System.out.println("2. VOCABULARY");/*Not built yet
-      System.out.println("3. FOREIGN LANGUAGES");
-      System.out.println("4. POTPOURRI ");*/
+      System.out.println("2. VOCABULARY");
    }
    
    private void printTimeStats(long seconds){
