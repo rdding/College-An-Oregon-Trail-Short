@@ -37,8 +37,56 @@ public class College {
         System.out.println("you should blow all your money on booze and cocaine.");
         System.out.println("You have $" +player.getMoney() + " in cash.");
         shop(player);
+        gameLoop(player, degreeLength, money, roommates, playerName);
+        System.out.println("Congratulations you did it!!!!!!!!!!!!!!!!!!");
     }
-    
+    //returns quarters needed to complete degree
+    private static int gameLoop(Player p, int degreeLength, int money, Roommate[] roomates,String name){
+       int quarter = 0;
+       int quartersCompleted = 0;
+       while(quartersCompleted<degreeLength){
+          int year = quarter / 3;
+          int currentQuarter = (quarter %3) + 1;
+          for(int i = 0; i<5; i++){
+             System.out.println("WELCOME TO WEEK " + (i*2));
+             displayStopChoices();
+             int choice = readNum(6, "What do you want to do??");
+             doStop(p, choice);
+                   
+          }
+          boolean pass = takeTest(p,quartersCompleted+1);
+          if(pass){
+             quartersCompleted++;
+          }
+          quarter++;
+       }
+       System.out.println("$&^*(&^%&*(&^ You finished school &^(**&^%^&*()*&");
+       return quarter-1;
+    }
+    private static void displayStopChoices(){
+       System.out.println("1. Study");
+       System.out.println("2. Drugs");
+       System.out.println("3. Piracy");
+       System.out.println("4. PassiveStudy");
+       System.out.println("5. Gamble");
+       System.out.println("6. Talk to someone");
+    }
+    private static void doStop(Player p, int choice){
+       if(choice == 1){
+          doStudying(p);
+       }else if(choice ==2){
+          doDrugs(p);
+       }else if(choice ==3){
+          doPiracy(p);
+       }else if(choice ==4){
+          passiveStudy(p);
+       }else if(choice ==5){
+          playBlackJack(p);
+       }else{//talk to someone
+          System.out.println("hello! nice to meet you");
+       }
+       System.out.println("What an exhausting stop!!!");
+    }
     private static void welcome(){
         System.out.println("\nCOLLEGE: A VULGAR OREGON TRAIL ADVENTURE\n");
         System.out.println("You may:");
@@ -243,7 +291,100 @@ public class College {
         }
     }
     private static void playBlackJack(Player p){
-       Minigame m = new Blackjack(p);
-       m.start();
+       Blackjack b = new Blackjack(p);
+       b.start();
     }
+    private static void doDrugs(Player p){
+       Drugs d = new Drugs();
+       d.start();
+    }
+    private static void doParty(Player p){
+       Party theParty = new Party(p);
+       //theParty.start() called by constructor. no need for secondard call
+    }
+    private static void passiveStudy(Player p){
+       PassiveStudy pS = new PassiveStudy(p);
+       pS.start();
+    }
+    private static void doPiracy(Player p){
+       Piracy pirate = new Piracy(p);
+       pirate.start();
+    }
+    private static void doStudying(Player p){
+       Studying s = new Studying(p);
+       s.start();
+    }
+    //Returns true || false depending on if student passes
+    private static boolean takeTest(Player p, int quarter){
+       int knowledge = p.getKnowledge();
+       int knowledgeNeeded = (int) (Math.pow(1.05, quarter) * quarter *100);
+       System.out.println("It is time to take your final exams!!!");
+       System.out.print("You have " + knowledge + " Knowledge points");
+       System.out.println("To barely pass you need " + knowledgeNeeded + " know");
+       int adderallBump = knowledge/10;
+       System.out.println("Would you like to use knolwedge enhancing drugs???");
+       char [] options = {'Y','N'};
+       char choice = Blackjack.getValidChar(options);
+       if(choice == 'Y'){
+          System.out.println("Adderall Taken...");
+          int rand = (int) (Math.random() *10);
+          if(rand <2){
+             System.out.println("\tIt wasn't very effective...");
+             adderallBump *=0.6;
+          }else if(rand>7){
+             System.out.println("\tIt was super effective!!!");
+             adderallBump *=2;
+          }
+          System.out.println("Knowlede + " + adderallBump);
+          knowledge += adderallBump;
+          System.out.print("New knowledge level: " + knowledge);          
+       }
+       if(knowledge<knowledgeNeeded){
+          System.out.println("Would you be interested in bribing a teacher");
+          choice = Blackjack.getValidChar(options);
+          if(choice == 'Y'){
+             System.out.println("grades can't be bought or sold. shame...");
+             if(p.getHealth() == 1){
+                System.out.println("You died from a slap to a face for your stupidity");
+                p.die(false);
+             }else{
+                System.out.println("Health -1");
+                p.setHealth(p.getHealth()-1);
+             }
+          }
+          System.out.println("Looks like you aren't smart enough to pass this test by yourself...");
+          System.out.println("Would you like to cheat on this test???");
+          int diff = knowledgeNeeded -knowledge;
+          if(diff>100){
+             diff = 99;
+          }
+          System.out.println("Chance of getting caught are " + diff + "%.");
+          choice = Blackjack.getValidChar(options);
+          if(choice == 'Y'){
+             int rand = (int) (Math.random()*100);
+             if(rand<diff){
+                System.out.println("Unfortunately you got caught...");
+                System.out.println("You begged to be failed but still be able to finish college");
+                return false;
+             }else{
+                int cheatingSkill = (int) (Math.random() *10);
+                if(cheatingSkill<3){
+                   System.out.print("You successfully cheated!!!!");
+                   System.out.println("\toff the worst student...");
+                   System.out.println("FAIL FAIL FAIL");
+                   return false;
+                }
+                
+                System.out.println("Your risk paid off and you passed the class!!!");
+                return true;
+             }
+          }else{
+             System.out.println("why didnt you cheat??? i told you that you would fail");
+             System.out.println("FAIL FAIL FAIL");
+             return false;
+          }
+       }
+       System.out.println("fabulous performance on that examination :)))) -> PASS");
+       return true;//A given that you will pass tes test given that you are smart enough
+       }
 }
