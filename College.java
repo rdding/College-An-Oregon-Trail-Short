@@ -34,12 +34,12 @@ public class College {
         /////////////////////////////////////
         Player player = new Player(degreeLength, money, playerName, roommates);
         System.out.println("Before you get fucked by an unstable financial future");
-        System.out.println("you should blow all your money on kegs and cocaine.");
+        System.out.println("you should blow all your money on booze and cocaine.");
         System.out.println("You have $" +player.getMoney() + " in cash.");
         shop(player);
     }
     
-    public static void welcome(){
+    private static void welcome(){
         System.out.println("COLLEGE: A VULGAR OREGON TRAIL ADVENTURE\n");
         System.out.println("You may:");
         System.out.println("    1. GET FUCKED BY STUDENT LOANS");
@@ -48,7 +48,7 @@ public class College {
         System.out.println("What is your choice?");
     }
     
-    public static void welcomeCaller(){
+    private static void welcomeCaller(){
         welcome();
         int choice = readNum(3, "What is your choice?");
         if (choice == 2) {
@@ -59,15 +59,16 @@ public class College {
         }
     }
     
-        public static void gameInfo(){
-        //WRITETHIS
-        //display screen by screen in the oregon trail style
-        //need to figure out how to progress with button press
-        //ex. press space to continue
-        //we can also cut out that part and display all the info in one chunk
+    private static void gameInfo(){
+        System.out.println("DO YOU ENJOY BEING FILTHY RICH?");
+        System.out.println("DO YOU ENJOY BEING DEBT FREE?");
+        System.out.println("DO YOU ENJOY A LIFE FREE OF STUDYING?");
+        System.out.println("DO YOU ENJOY BEING SOBER?");
+        System.out.println("TOO FUCKING BAD");
+        System.out.println("WELCOME TO COLLEGE, FUCKER");
     }
     
-    public static int characterSelect(){
+    private static int characterSelect(){
         displayRoles();
         int choice = readNum(4, "What is your choice?");
         if(choice == 4){
@@ -79,12 +80,13 @@ public class College {
     }
     
     private static void displayRoles() {
-       System.out.println("   1. Rich but long degree");
-       System.out.println("   2. Middle class and average degree");
-       System.out.println("   3. Poor and short degree");   
+       System.out.println("WHAT DEGREE DO YOU WANT WHEN YOU DIE?")
+       System.out.println("   1. Computer Science");
+       System.out.println("   2. AgriBusiness");
+       System.out.println("   3. English");   
    }
 
-   public static String nameSelect(){
+   private static String nameSelect(){
         Scanner scan = new Scanner(System.in);
         
         String name;
@@ -103,11 +105,13 @@ public class College {
         return "";
     }
   
-    public static void roleInfo(){
-        //see gameInfo() comments
+    private static void roleInfo(){
+        System.out.println("Computer Science: FILTHY RICH BUT COLLEGE TAKES FOREVER")
+        System.out.println("Agribusiness: YOU'RE A FUCKING FARMER. MEDIOCRE EVERYTHING");
+        System.out.println("English: WHY WOULD YOU DO THIS? BROKE AS FUCK.")
     }
     
-    public static Roommate[] roommateCreate(){
+    private static Roommate[] roommateCreate(){
         String name1, name2, name3;
 
         Scanner scan = new Scanner(System.in);
@@ -156,7 +160,7 @@ public class College {
         return roommates;
     }
     
-    public static void shop(Player player){
+    private static void shop(Player player){
         int alcohol = 0;
         int books = 0;
         int drugs = 0;
@@ -239,7 +243,7 @@ public class College {
             
         }
     }
-    public static void playBlackJack(Player p){
+    private static void playBlackJack(Player p){
        Minigame m = new Blackjack(p);
        m.start();
     }
