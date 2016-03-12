@@ -341,6 +341,10 @@ public class College {
        b.start();
     }
     private static void doDrugs(Player p){
+       if(p.getDrugs() == 0){
+         System.out.println("\nYOU AIN'T GOT ANY DANK SHIT");
+         return;
+       }
        Drugs d = new Drugs();
        d.start();
     }
@@ -349,6 +353,10 @@ public class College {
        //theParty.start() called by constructor. no need for secondard call
     }
     private static void passiveStudy(Player p){
+       if(p.getBooks() == 0){
+          System.out.println("\nYOU AIN'T GOT BOOKS TO BURN");
+          return;
+       }
        PassiveStudy pS = new PassiveStudy(p);
        pS.start();
     }
@@ -444,7 +452,7 @@ public class College {
              int rand = (int) (Math.random()*100);
              if(rand<diff){
                 System.out.println("GOT CAUGHT, BITCH");
-                System.out.println("YOU BEGGED TO BE EXPELLED, BUT THEY GAVE YOU PITY");
+                System.out.println("YOU SHOULD BE EXPELLED, BUT THEY GAVE YOU PITY");
                 return false;
              }else{
                 int cheatingSkill = (int) (Math.random() *10);
