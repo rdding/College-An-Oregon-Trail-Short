@@ -137,9 +137,14 @@ public class Studying implements Minigame{
       if(letter.length()>0){
          firstLet = letter.charAt(0);
       }
-      while(letter.length() != 1 || (firstLet-'A')<0 ||firstLet-'A'>displayedOptions.length ){
-         System.out.println("no relly, tell me the answer...");
+      while(letter.length() != 1 || (firstLet-'A')<0 ||firstLet-'A'>displayedOptions.length-1 ){
+         System.out.println("no really, tell me the answer...");
          letter = myScanner.nextLine().trim().toUpperCase();
+         if(letter.length()>0){
+            firstLet = letter.charAt(0);
+         }else{
+            firstLet = '0';
+         }
       }
       if(letter.charAt(0) == ('A'+correctIndex)){
          System.out.println("CORRECT: GOOD JOB");
@@ -147,7 +152,7 @@ public class Studying implements Minigame{
          giveStudy((level+3)*2/5);
       }else{
          System.out.println("WRONG: BAD BAD");
-         System.out.println("The correct answer was" + ((char)('A'+correctIndex)));
+         System.out.println("The correct answer was " + ((char)('A'+correctIndex)));
       }
    }
    private void giveStudy(int n){
@@ -254,12 +259,26 @@ public class Studying implements Minigame{
          }
          shuffle(multiples);
          return multiples;
-      }
-      double answer =  Double.parseDouble(realValue);
-      
+      }      
+      double answer =  Double.parseDouble(realValue);      
       String [] multiples = new String[chances];
       multiples[0] = realValue+"";
       multiples[1] = "ERROR"; //Psuedo error
+      //Find a better way to add options that are close
+      if(realValue.indexOf('.') != -1){
+         for(int i =2; i<chances; i++){
+            double sol = answer + (Math.random() * 40)-20;
+            String val = sol +"";
+            while(contains(multiples, val)){
+               sol = answer + (Math.random() * 40)-20;
+               val = sol+"";
+            }
+            multiples[i] = val;
+         }
+      
+         shuffle(multiples);
+         return multiples;
+      }
       for(int i =2; i<chances; i++){
          double sol = answer + (Math.random() * 40)-20;
          String val = sol +"";
@@ -269,9 +288,13 @@ public class Studying implements Minigame{
          }
          multiples[i] = val;
       }
+      //
       shuffle(multiples);
       return multiples;
       //Returns a list of possible solutions with the real value shuffled
+   }
+   private String permute (String s){
+      return null;
    }
    private boolean contains(String [] repo, String val){
       if(repo == null){
@@ -311,7 +334,7 @@ public class Studying implements Minigame{
       System.out.println("You correctly answered " + correct +" out of " + recieved + " problems!!!");
       int knowledge = p.getKnowledge();
       if(recieved != 0){
-         int percent = (correct/recieved)*100;
+         int percent = (100*correct/recieved);
          System.out.println(percent + "% correct.");
          if(percent>=80){
             System.out.println("Great Job!!! " + percent/10 + " points knowledge bonus!");
