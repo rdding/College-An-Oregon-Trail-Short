@@ -14,6 +14,11 @@ public class Studying implements Minigame{
    private int recieved;
    private int correct;
    
+   /**
+    * the constructor for the studying minigame that takes in the player that user
+    * controls and allows studying stop.
+    * @param p - Player, the user controlled character.
+    */
    public Studying(Player p){
       startTime = System.currentTimeMillis();
       this.p = p;
@@ -21,6 +26,9 @@ public class Studying implements Minigame{
       correct  = 0;
       System.out.println("Welcome to your study session!!!!");
    }
+   /**
+    * Method specified by the minigame method meant to signify the start of studying
+    */
    @Override
    public void start() {
       printStudyOptions();    
@@ -324,6 +332,9 @@ public class Studying implements Minigame{
       return -1;
    }
 
+   /**
+    * Method to exit the study session and is called by the private methods above.
+    */
    @Override
    public void exit() {
       System.out.println("--------------------------------------------------");

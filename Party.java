@@ -5,6 +5,10 @@ public class Party implements Minigame{
    private int startHealth;
    private double bac;
    private int drinksHad;
+   /**
+    * A constructor to get this party started with the player.
+    * @param p
+    */
    public Party (Player p){
       this.p = p;
       if(p.getAlcohol() ==0){
@@ -14,6 +18,10 @@ public class Party implements Minigame{
       drinksHad = 0;
       this.start();
    }
+   /**
+    * A method to actually start the party. Note it is called by the constructor and
+    * no additional calls are required
+    */
    @Override
    public void start() {
       while(p.getAlcohol() >0){
@@ -85,6 +93,10 @@ public class Party implements Minigame{
    private int getChanceBadTime(){
       return (int) (1+bac*100)/2;
    }
+   /**
+    * Public method specified to leave the party. Why would you leave the party. Like
+    * seriously
+    */
    @Override
    public void exit() {
       System.out.println("--------------------------------------------------");
