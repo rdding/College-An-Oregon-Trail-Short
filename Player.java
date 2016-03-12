@@ -107,4 +107,12 @@ public class Player {
     public void setProgression(int progression){
         this.progression = progression;
     }
+    
+    public void die(boolean isAlive){
+        System.out.println("CONGRATULATIONS, YOU PLAYED YOURSELF.");
+        System.out.println("YOUR TOMBSTONE READS:");
+        System.out.println("HERE LIES: " +getPlayerName());
+        System.out.println("REMEMBERED BY NO ONE.");
+        System.exit(0);
+    }
 }

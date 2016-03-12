@@ -103,6 +103,7 @@ public class College {
             gameInfo();
             welcomeCaller();
         } else if(choice == 3){
+            System.out.println("PLAY THE GAME OR GET THE FUCK OUT");
             System.exit(0);//wat
         }
     }
@@ -121,7 +122,7 @@ public class College {
         int choice = readNum(4, "\nWhat is your choice?");
         if(choice == 4){
             roleInfo();
-            characterSelect();
+            choice = characterSelect();
         }
         return choice;
     }
@@ -130,7 +131,8 @@ public class College {
        System.out.println("\nWHAT DEGREE DO YOU WANT WHEN YOU DIE?");
        System.out.println("   1. Computer Science");
        System.out.println("   2. AgriBusiness");
-       System.out.println("   3. English");   
+       System.out.println("   3. English");
+       System.out.println("   4. LEARN ABOUT EACH SHITTY ROLE");
    }
 
    private static String nameSelect(){
@@ -249,9 +251,9 @@ public class College {
             } else if(response == 4) {
                 System.out.println();
                 System.out.println("GO GET WASTED INSTEAD.($5 each, limit 100)");
-                total -= drugs;
+                total -= food;
                 food = 5 * readNum(100, "DOES THIS LOOK LIKE COSTCO TO YOU?");
-                total += drugs;
+                total += food;
             } else {
                 if(total == 0){
                     System.out.println("\nI BET YOU'RE A COMMUNIST LIKE BERNIE SANDLERS.");
