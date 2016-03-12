@@ -54,82 +54,85 @@ public class Blackjack implements Minigame{
       if(p != null && deck != null){
          if(!canPlay()){
             this.exit();
-         }
-         this.shuffle();
-         System.out.println("--Deck Shuffled--");
-         int bet = getBet();
-         int cardPtr = 0;
-         int outcome = -1; //if
-         ArrayList <Card> playerHand = new ArrayList<>();
-         ArrayList <Card> dealerHand = new ArrayList<>();
-         //initial dealing of cards
-         playerHand.add(deck[cardPtr++]);
-         playerHand.add(deck[cardPtr++]);
-         dealerHand.add(deck[cardPtr++]);
-         dealerHand.add(deck[cardPtr++]);
-         ///////////////////////////
-         boolean endOfGame = false;
-         char [] hitStand = {'H','S'};
-         char [] yesNo    = {'Y','N'};
-         do{
-            printFirstHalfHands(dealerHand,playerHand);
-            //check for 21 with two cards
-            if(this.getHighScore(playerHand) == 21 && playerHand.size() == 2){
-               outcome = 3;
-               System.out.println("Congratulations - Blackjack");
-               break;
-            }
-            if(this.getHighScore(dealerHand) == 21 && dealerHand.size() == 2){
-               outcome = 2;
-               System.out.println("Dealer Had Blackjack - Instant Lose");
-               System.out.println("Dealer Hand: 21");
-               printHand(dealerHand);
-               break;
-            }
-            System.out.print("Hit or Stand? (H|S) ");
-            char validInput = getValidChar( hitStand);
-            if(validInput == 'H'){
-               System.out.println("Player - Hit");
-               playerHand.add(deck[cardPtr++]);
-               if(getLowScore(playerHand)>21){
-                  System.out.println("You went over. BUST");
-                  outcome = 2;
+         }else{
+            this.shuffle();
+            System.out.println("--Deck Shuffled--");
+            int bet = getBet();
+            int cardPtr = 0;
+            int outcome = -1; //if
+            ArrayList <Card> playerHand = new ArrayList<>();
+            ArrayList <Card> dealerHand = new ArrayList<>();
+            //initial dealing of cards
+            playerHand.add(deck[cardPtr++]);
+            playerHand.add(deck[cardPtr++]);
+            dealerHand.add(deck[cardPtr++]);
+            dealerHand.add(deck[cardPtr++]);
+            ///////////////////////////
+            boolean endOfGame = false;
+            char [] hitStand = {'H','S'};
+            char [] yesNo    = {'Y','N'};
+            do{
+               printFirstHalfHands(dealerHand,playerHand);
+               //check for 21 with two cards
+               if(this.getHighScore(playerHand) == 21 && playerHand.size() == 2){
+                  outcome = 3;
+                  System.out.println("Congratulations - Blackjack");
                   break;
                }
-            }else{// player stand
-               endOfGame = true;
-               printOpenHands(dealerHand,playerHand);
-               while(this.getHighScore(dealerHand)<17){
-                  if(getLowScore(dealerHand)>21){
-                     printOpenHands(dealerHand,playerHand); 
-                     System.out.println("Dealer went over. DEALER BUST");
-                     outcome = 1;
+               if(this.getHighScore(dealerHand) == 21 && dealerHand.size() == 2){
+                  outcome = 2;
+                  System.out.println("Dealer Had Blackjack - Instant Lose");
+                  System.out.println("Dealer Hand: 21");
+                  printHand(dealerHand);
+                  break;
+               }
+               System.out.print("Hit or Stand? (H|S) ");
+               char validInput = getValidChar( hitStand);
+               if(validInput == 'H'){
+                  System.out.println("Player - Hit");
+                  playerHand.add(deck[cardPtr++]);
+                  if(getLowScore(playerHand)>21){
+                     System.out.println("You went over. BUST");
+                     outcome = 2;
                      break;
                   }
-                  dealerHand.add(deck[cardPtr++]);
-                  printOpenHands(dealerHand,playerHand);                
+               }else{// player stand
+                  endOfGame = true;
+                  printOpenHands(dealerHand,playerHand);
+                  while(this.getHighScore(dealerHand)<17){
+                     if(getLowScore(dealerHand)>21){
+                        printOpenHands(dealerHand,playerHand); 
+                        System.out.println("Dealer went over. DEALER BUST");
+                        outcome = 1;
+                        break;
+                     }
+                     dealerHand.add(deck[cardPtr++]);
+                     printOpenHands(dealerHand,playerHand);                
+                  }
+                  int playerMax = getMaxLegal(playerHand);
+                  int dealerMax = getMaxLegal(dealerHand);
+                  if(playerMax >dealerMax){
+                     outcome = 1;
+                  }else if(playerMax == dealerMax){
+                     outcome = 0;
+                  }else{
+                     outcome = 2;
+                  }               
                }
-               int playerMax = getMaxLegal(playerHand);
-               int dealerMax = getMaxLegal(dealerHand);
-               if(playerMax >dealerMax){
-                  outcome = 1;
-               }else if(playerMax == dealerMax){
-                  outcome = 0;
+            }while(!endOfGame);
+            modifyPlayerWealth(outcome,bet);
+            if(canPlay()){ 
+               System.out.println("Would You Like to Play Again? (Y|N)");
+             
+               if(getValidChar(yesNo) == 'Y'){
+                  this.start();
                }else{
-                  outcome = 2;
-               }               
+                  this.exit();
+               } 
             }
-         }while(!endOfGame);
-         modifyPlayerWealth(outcome,bet);
-         System.out.println("Would You Like to Play Again? (Y|N)");
-       
-         if(getValidChar(yesNo) == 'Y'){
-            this.start();
-         }else{
-            this.exit();
-         } 
+         }
+         return;
       }
-      return;
    }
 
    @Override
@@ -144,7 +147,7 @@ public class Blackjack implements Minigame{
          if(dif == 1) s = "You gained +" + dif + " dollar!";
          System.out.println(s);
       }else if(dif<0){
-         String s = "You lost -" + dif + " dollars!";
+         String s = "You lost " + dif + " dollars!";
          if(dif == -1) s = "You lost " + dif + " dollar!";
          System.out.println(s);
       }else{
@@ -288,7 +291,7 @@ public class Blackjack implements Minigame{
          delta = bet * 3 /2;
       }
       if(delta<0 && Math.abs(delta) >= p.getMoney()){
-         System.out.print("Change in Bankroll: -" + delta);
+         System.out.println("Change in Bankroll: -" + delta);
          p.setMoney(0);
          System.out.println("YOU HAVE BEEN KICKED OUT OF THE CASINO FOR LACK OF FUNDS!!!");
          this.exit();

@@ -68,9 +68,10 @@ public class Piracy implements Minigame{
       System.out.println("Money: " + p.getMoney());
    }
    private void tryPirating(){
-      int rand = (int)Math.random()*100;
-      if(rand>=p.getBooks()){
+      int rand = (int) (Math.random()*100);
+      if(rand>p.getBooks()){
          System.out.println("Success\t Books++");
+         p.setBooks(p.getBooks()+1);
       }else{
          System.out.println("You got caught");
          badThingsHappen();
