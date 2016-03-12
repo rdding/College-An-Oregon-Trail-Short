@@ -6,6 +6,22 @@ public class PassiveStudy implements Minigame{
    }
    @Override
    public void start() {
+      if(p.getBooks()>0){
+         System.out.println("You have " + p.getBooks() + " to study with");
+         
+         System.out.print("How many books would you like to use to study with?");
+         System.out.println("(0 - " + p.getBooks() + ")" );
+         int booksUsed = College.readNum(p.getBooks(), "HOW MANY BOOKS?");
+         if(booksUsed >0){
+            System.out.print("Because of your books you gained + " + booksUsed + " knowledge");
+            p.setBooks(p.getBooks()-booksUsed);
+            p.setKnowledge(p.getKnowledge() + booksUsed);
+            if(p.getBooks()<0){
+               System.out.println("Somehow you used too many books. interesting...");
+               p.setBooks(0);
+            }        
+         }
+      }
       int rand = (int) (Math.random() * 20);
       if(rand < 1){ //Failed study session
          System.out.println("You had a pretty bad study session...");
@@ -37,6 +53,17 @@ public class PassiveStudy implements Minigame{
       }else{
          printKnowledge(10);
       }
+      System.out.println("Studying hurts. Health -20");
+      p.setHealth(p.getHealth()-20);
+      if(p.getHealth()<0){
+         p.setHealth(0);
+      }
+      if(p.getHealth()==0){
+         System.out.println("What a sad way to go. Died while studying...");
+         p.die(false);
+      }
+      System.out.println("New Health: " + p.getHealth());
+      System.out.println("--------------------------------------------------");
    }
    private void printKnowledge(int knowledgeChange){
       if(knowledgeChange<0){
