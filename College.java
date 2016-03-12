@@ -220,7 +220,7 @@ public class College {
     *
     *@param display a String that is printed when an invalid value is entered.
     *
-    *return an integer between zero and max+10
+    *@return an integer between zero and max+10
     */
     public static int readNum(int max, String display){
       Scanner myScanner = new Scanner(System.in);
