@@ -3,6 +3,12 @@ public class Piracy implements Minigame{
    private Player p;
    private int startingTextbooks;
    private int moneyStarting;
+   
+   /**
+    * The constructor for the piracy minigame. Used in the stops and takes
+    * player in.
+    * @param p - Player that user controls and stored as instance variable to be used.
+    */
    public Piracy(Player p){
       this.p =p;
       startingTextbooks = p.getBooks();
@@ -10,6 +16,9 @@ public class Piracy implements Minigame{
       System.out.println("so you want to pirate some textbooks do you?");
    }
    
+   /**
+    * Method found in the minigame interface to launch the piracy minigame.
+    */
    @Override
    public void start() {
       System.out.println("--------------------------------------------------");
@@ -30,7 +39,10 @@ public class Piracy implements Minigame{
          exit();
       }
    }
-
+   /**
+    *Method defined in the Minigame interface and called by the start method
+    *when the player is done running the code for start. 
+    */
    @Override
    public void exit() {
       System.out.println("--------------------------------------------------");
