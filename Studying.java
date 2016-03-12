@@ -28,7 +28,13 @@ public class Studying implements Minigame{
       System.out.println("How hard do you want to study (1-10)");
       int level = College.readNum(10, "What level would you like to study at???");
       System.out.println("How many problems do you want to do???");
+      System.out.println("Note that every problem you do decreases your health by 4");
+      System.out.println("You can kill yourself if you are not careful. Health: " + p.getHealth());
       int problemCount = College.readNum(10, "How many problems would you like to do???");
+      p.setHealth(p.getHealth()-4*problemCount);
+      if(p.getHealth()<0){
+         p.setHealth(0);
+      }
       recieved = problemCount;
       if(studyChoice == MATH){
          while(problemCount>0){
@@ -60,6 +66,10 @@ public class Studying implements Minigame{
             learnVocab(randomWord,level);
             problemCount--;
          }
+      }
+      if(p.getHealth() == 0){
+         System.out.println("--Death by studying--");
+         p.die(false);
       }
       exit();
    }
@@ -134,7 +144,7 @@ public class Studying implements Minigame{
       if(letter.charAt(0) == ('A'+correctIndex)){
          System.out.println("CORRECT: GOOD JOB");
          correct++;
-         giveStudy(level);
+         giveStudy((level+3)*2/5);
       }else{
          System.out.println("WRONG: BAD BAD");
          System.out.println("The correct answer was" + ((char)('A'+correctIndex)));
@@ -246,6 +256,7 @@ public class Studying implements Minigame{
          return multiples;
       }
       double answer =  Double.parseDouble(realValue);
+      
       String [] multiples = new String[chances];
       multiples[0] = realValue+"";
       multiples[1] = "ERROR"; //Psuedo error
@@ -360,7 +371,7 @@ public class Studying implements Minigame{
       String userInput = myScanner.nextLine().trim();
       if(userInput.equals(capped)){
          System.out.println("CONGRATULATIONS, you did it right");
-         giveStudy(level);
+         giveStudy((level+3)*2/5);
          correct++;
       }else{
          System.out.println("WRONG WRONG WRONG");
