@@ -44,11 +44,21 @@ public class College {
     private static int gameLoop(Player p, int degreeLength, int money, Roommate[] roomates,String name){
        int quarter = 0;
        int quartersCompleted = 0;
+       
+       int prevYear = 0;
+       
        while(quartersCompleted<degreeLength){
-          int year = quarter / 3;
+          int year = (quarter / 3) + 1;
           int currentQuarter = (quarter %3) + 1;
+          if(prevYear != year){
+             System.out.println("it is year " + year + " quarter " + currentQuarter);
+             prevYear = year;
+          }else{
+             System.out.println("quarter++, that was quick!!!" + currentQuarter);
+          }
           for(int i = 0; i<5; i++){
              System.out.println("WELCOME TO WEEK " + (i*2));
+             printPlayerStats(p);
              displayStopChoices();
              int choice = readNum(6, "What do you want to do??");
              doStop(p, choice);
@@ -180,33 +190,50 @@ public class College {
         System.out.println("    3. ");
         name3 = scan.nextLine().trim();
 
-        while(true){
-            System.out.println("\nAre these names correct?");
-            System.out.println("    1. " +name1);
-            System.out.println("    2. " +name2);
-            System.out.println("    3. " +name3);
-            
-            String response = scan.nextLine().trim().toUpperCase();
-            if(response.equals("YES") || response.equals("Y")) {
-                   break;
-            }
-            System.out.println("Which name is incorrect? ");
-            int incorrect = readNum(3, "Which name is incorrect?");
-            System.out.println("Enter the new name: ");
-            String newName = scan.nextLine().trim();
-            if(incorrect == 1) {
-                name1 = newName;
-            } else if (incorrect == 2) {
-                name2 = newName;
-            } else {
-                name3 = newName;
-            }
-        }
-        Roommate[] roommates = new Roommate[3];
-        roommates[0] = new Roommate(name1);
-        roommates[1] = new Roommate(name2);
-        roommates[2] = new Roommate(name3);
-        return roommates;
+        return validateNames(name1, name2, name3);
+    }
+    
+    private static Roommate [] validateNames(String s1, String s2, String s3){
+       System.out.println("\nAre these names correct?");
+       System.out.println("    1. " +s1);
+       System.out.println("    2. " +s2);
+       System.out.println("    3. " +s3);
+       Scanner myScanner = new Scanner(System.in);
+       String response = myScanner.nextLine().trim().toUpperCase();
+       
+       while(! (response.equals("Y") ||response.equals("N") || 
+             response.equals("YES")||response.equals("NO"))){
+          System.out.println("Enter a valid response (YES|NO|Y|N) ");
+          response = myScanner.nextLine().trim().toUpperCase();
+       }
+       
+       if(response.equals("YES") || response.equals("Y")) {
+          Roommate [] roommates = new Roommate[3];
+          roommates[0] = new Roommate(s1);
+          roommates[1] = new Roommate(s2);
+          roommates[2] = new Roommate(s3);
+          return roommates;
+       }else {
+          System.out.println("Which name is incorrect? ");
+          System.out.println("If all names are correct->(4)");
+          int incorrect = readNum(4, "Which name is incorrect?");
+          System.out.println("Enter the new name: ");
+          String newName = myScanner.nextLine().trim();
+          if(incorrect == 1) {
+              s1 = newName;
+          } else if (incorrect == 2) {
+              s2 = newName;
+          } else if (incorrect == 3){
+              s3 = newName;
+          } else{
+             Roommate [] roommates = new Roommate[3];
+             roommates[0] = new Roommate(s1);
+             roommates[1] = new Roommate(s2);
+             roommates[2] = new Roommate(s3);
+             return roommates;
+          }
+          return validateNames(s1,s2,s3);
+       }
     }
     
     private static void shop(Player player){
@@ -316,6 +343,17 @@ public class College {
        Studying s = new Studying(p);
        s.start();
     }
+    //Print before every stop to help guide player on what
+    //minigame should be done
+    private static void printPlayerStats(Player p){
+       System.out.println("You have \t" + p.getAlcohol()   + " alcohols");
+       System.out.println("You have \t" + p.getBooks()     + " books");
+       System.out.println("You have \t" + p.getDrugs()     + " drugs");
+       System.out.println("You have \t" + p.getFood()      + " foods");
+       System.out.println("You have \t" + p.getHealth()    + " health");
+       System.out.println("You have \t" + p.getKnowledge() + " knowledge");
+       System.out.println("You have \t" + p.getMoney()     + " moneys\n\n");
+    }
     //Returns true || false depending on if student passes
     private static boolean takeTest(Player p, int quarter){
        int knowledge = p.getKnowledge();
@@ -324,22 +362,36 @@ public class College {
        System.out.print("You have " + knowledge + " Knowledge points");
        System.out.println("To barely pass you need " + knowledgeNeeded + " know");
        int adderallBump = knowledge/10;
-       System.out.println("Would you like to use knolwedge enhancing drugs???");
+       int adderallCost = (int) (10 * (Math.random() + 1));
+       System.out.println("Would you like to use knolwedge enhancing drugs??? ");
+       System.out.println("\tThe cost would be " + adderallCost);
        char [] options = {'Y','N'};
        char choice = Blackjack.getValidChar(options);
        if(choice == 'Y'){
-          System.out.println("Adderall Taken...");
-          int rand = (int) (Math.random() *10);
-          if(rand <2){
-             System.out.println("\tIt wasn't very effective...");
-             adderallBump *=0.6;
-          }else if(rand>7){
-             System.out.println("\tIt was super effective!!!");
-             adderallBump *=2;
+          if(adderallCost>p.getMoney()){
+             System.out.println("WHY YOU PLAYING GAMES WITH A DRUG DEALER");
+             System.out.println("\tYOU DON'T HAVE ENOUGH MONEY FOR THE GOOD STUFF");
+             System.out.println("No adderall for you");
+             System.out.println("Health - 1");
+             p.setHealth(p.getHealth()-1);
+             if(p.getHealth()<1){
+                System.out.println("what an awful way to die");
+                p.die(false);
+             }
+          }else{
+             System.out.println("Adderall Taken...");
+             int rand = (int) (Math.random() *10);
+             if(rand <2){
+                System.out.println("\tIt wasn't very effective...");
+                adderallBump *=0.6;
+             }else if(rand>7){
+                System.out.println("\tIt was super effective!!!");
+                adderallBump *=2;
+             }
+             System.out.println("Knowlede + " + adderallBump);
+             knowledge += adderallBump;
+             System.out.print("New knowledge level: " + knowledge);          
           }
-          System.out.println("Knowlede + " + adderallBump);
-          knowledge += adderallBump;
-          System.out.print("New knowledge level: " + knowledge);          
        }
        if(knowledge<knowledgeNeeded){
           System.out.println("Would you be interested in bribing a teacher");
