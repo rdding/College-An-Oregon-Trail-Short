@@ -7,7 +7,7 @@ public class Party implements Minigame{
    private int drinksHad;
    /**
     * A constructor to get this party started with the player.
-    * @param p
+    * @param p - the player in the party. That is player user controls when called
     */
    public Party (Player p){
       this.p = p;
