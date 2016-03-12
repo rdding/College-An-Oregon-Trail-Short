@@ -62,17 +62,18 @@ public class Party implements Minigame{
       }else{
          System.out.println("Unruly disturbance... get fined");
          if(p.getMoney()<25){
-            System.out.println("-"+p.getMoney());
+            System.out.println("-"+p.getMoney()+ "dollars");
             p.setMoney(0);
          }else{
-            System.out.println("-25");
+            System.out.println("-25 dollars");
             p.setMoney(p.getMoney()-25) ;
          }
       }
    }
    private boolean doTheAlcohol(){
       int bad = getChanceBadTime();
-      int rand = ((int) Math.random() * 100);
+      int rand = (int)(Math.random() * 100);
+      bac +=0.03;
       return(bad<rand);
    }
    
@@ -88,7 +89,7 @@ public class Party implements Minigame{
    public void exit() {
       System.out.println("--------------------------------------------------");
       System.out.println("--------------------------------------------------");
-      System.out.print("You had a total of " + drinksHad + "drinks.");
+      System.out.print("You had a total of " + drinksHad + " drinks.");
       System.out.println("Your health changed by " + (p.getHealth() -startHealth) );
       System.out.println("You ended the night with a BAC of "  + bac + "!!!");
       System.out.println("--------------------------------------------------");
