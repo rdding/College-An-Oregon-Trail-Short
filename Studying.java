@@ -348,11 +348,11 @@ public class Studying implements Minigame{
          int percent = (100*correct/recieved);
          System.out.println(percent + "% correct.");
          if(percent>=80){
-            System.out.println("Great Job!!! " + percent/10 + " points knowledge bonus!");
-            p.setKnowledge(knowledge + (percent/10));
+            System.out.println("Great Job!!! " + 2 + " points knowledge bonus!");
+            p.setKnowledge(knowledge + 2);
          }else if(percent>=70){
-            System.out.println("Great Job!!! 5 points knowledge bonus!");
-            p.setKnowledge(knowledge + 5);
+            System.out.println("Great Job!!! 1 point knowledge bonus!");
+            p.setKnowledge(knowledge + 1);
          }else{
             if(percent<40){
                System.out.println("Pathetic... no bonus");
