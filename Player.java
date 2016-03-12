@@ -170,21 +170,21 @@ public class Player {
     }
     /**
      * Method to set the money of the player 
-     * @param money
+     * @param money - int the amount of money that a player has
      */
     public void setMoney(int money){
         this.money = money;
     }
     /**
-     * 
-     * @param progression
+     * Method to set the player's progression in the game after quarter completion.
+     * @param progression - int the progression that the player has made quarters. non -neg
      */
     public void setProgression(int progression){
         this.progression = progression;
     }
     /**
-     * 
-     * @param isAlive
+     * Method to kill the player. Can be called by other classes.
+     * @param isAlive - true if player has degree false if die midway
      */
     public void die(boolean isAlive){
         System.out.println("CONGRATULATIONS, YOU PLAYED YOURSELF.");
