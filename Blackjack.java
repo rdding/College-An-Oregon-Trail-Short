@@ -91,7 +91,7 @@ public class Blackjack implements Minigame{
             if(validInput == 'H'){
                System.out.println("Player - Hit");
                playerHand.add(deck[cardPtr++]);
-               if(getLowScore(dealerHand)>21){
+               if(getLowScore(playerHand)>21){
                   System.out.println("You went over. BUST");
                   outcome = 2;
                   break;
@@ -145,7 +145,7 @@ public class Blackjack implements Minigame{
          System.out.println(s);
       }else if(dif<0){
          String s = "You lost -" + dif + " dollars!";
-         if(dif == -1) s = "You lost -" + dif + " dollar!";
+         if(dif == -1) s = "You lost " + dif + " dollar!";
          System.out.println(s);
       }else{
          System.out.println("No change in bankroll!");
