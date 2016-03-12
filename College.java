@@ -7,6 +7,11 @@
 import java.util.Scanner;
 
 public class College {
+   /**
+   *Runs the game.
+   *
+   *@param args the user input passed into the game.
+   */
     public static void main(String[] args){
        //All variable names here
        int degreeChoice;
@@ -42,6 +47,90 @@ public class College {
         System.out.println("WELCOME TO THE REAL WORLD, JACKASS.");
         System.exit(0);
     }
+    
+    private static int characterSelect(){
+        displayRoles();
+        int choice = readNum(4, "\nWhat is your choice?");
+        if(choice == 4){
+            roleInfo();
+            choice = characterSelect();
+        }
+        return choice;
+    }
+    
+    private static void displayRoles() {
+       System.out.println("\nWHAT DEGREE DO YOU WANT WHEN YOU DIE?");
+       System.out.println("   1. Computer Science");
+       System.out.println("   2. AgriBusiness");
+       System.out.println("   3. English");
+       System.out.println("   4. LEARN ABOUT EACH SHITTY ROLE");
+   }
+    
+    private static void displayStopChoices(){
+       System.out.println("1. GET FUCKIN' WASTED");
+       System.out.println("2. GET HIGH");
+       System.out.println("3. PIRATE SOME TEXTBOOKS, FUCK YEAH");
+       System.out.println("4. BURN BOOKS AND SNORT THEIR ASHES");
+       System.out.println("5. STUDY LIKE A NERD");
+       System.out.println("6. GET MONEY");
+       System.out.println("7. HIT UP THE LOCAL DRUG DEALER");
+       System.out.println("8. Talk to friend");
+    }
+    
+    private static void doDrugs(Player p){
+       if(p.getDrugs() == 0){
+         System.out.println("\nYOU AIN'T GOT ANY DANK SHIT");
+         return;
+       }
+       Drugs d = new Drugs();
+       d.start();
+    }
+    
+    private static void doParty(Player p){
+       Party theParty = new Party(p);
+       //theParty.start() called by constructor. no need for secondard call
+    }
+    
+    private static void doPiracy(Player p){
+       Piracy pirate = new Piracy(p);
+       pirate.start();
+    }
+    
+    private static void doStop(Player p, int choice){
+       if(choice == 1){
+          doParty(p);
+       }else if(choice ==2){
+          doDrugs(p);
+       }else if(choice ==3){
+          doPiracy(p);
+       }else if(choice ==4){
+          passiveStudy(p);
+       }else if(choice ==5){
+          doStudying(p);
+       }else if(choice == 6){
+          playBlackJack(p);
+       }else if(choice == 7){
+          shop(p);
+       } else{
+          //talk to someone
+          talk(p);
+       }
+    }
+    
+    private static void doStudying(Player p){
+       Studying s = new Studying(p);
+       s.start();
+    }
+    
+    private static void gameInfo(){
+        System.out.println("\nDO YOU ENJOY BEING FILTHY RICH?");
+        System.out.println("DO YOU ENJOY BEING DEBT FREE?");
+        System.out.println("DO YOU ENJOY A LIFE FREE OF STUDYING?");
+        System.out.println("DO YOU ENJOY BEING SOBER?");
+        System.out.println("TOO FUCKING BAD");
+        System.out.println("WELCOME TO COLLEGE, FUCKER");
+    }
+    
     //returns quarters needed to complete degree
     private static int gameLoop(Player p, int degreeLength, int money, Roommate[] roomates,String name){
        int quarter = 0;
@@ -75,85 +164,8 @@ public class College {
        System.out.println("YOU HAVE HIT THE STUDENT LOAN CEILING");
        return quarter-1;
     }
-    private static void displayStopChoices(){
-       System.out.println("1. GET FUCKIN' WASTED");
-       System.out.println("2. GET HIGH");
-       System.out.println("3. PIRATE SOME TEXTBOOKS, FUCK YEAH");
-       System.out.println("4. BURN BOOKS AND SNORT THEIR ASHES");
-       System.out.println("5. STUDY LIKE A NERD");
-       System.out.println("6. GET MONEY");
-       System.out.println("7. HIT UP THE LOCAL DRUG DEALER");
-       System.out.println("8. Talk to friend");
-    }
-    private static void doStop(Player p, int choice){
-       if(choice == 1){
-          doParty(p);
-       }else if(choice ==2){
-          doDrugs(p);
-       }else if(choice ==3){
-          doPiracy(p);
-       }else if(choice ==4){
-          passiveStudy(p);
-       }else if(choice ==5){
-          doStudying(p);
-       }else if(choice == 6){
-          playBlackJack(p);
-       }else if(choice == 7){
-          shop(p);
-       } else{
-          //talk to someone
-          talk(p);
-       }
-    }
-    private static void welcome(){
-        System.out.println("\nCOLLEGE: A VULGAR OREGON TRAIL ADVENTURE\n");
-        System.out.println("You may:");
-        System.out.println("    1. GET FUCKED BY STUDENT LOANS");
-        System.out.println("    2. LEARN ABOUT GETTING FUCKED BY STUDENT LOANS");
-        System.out.println("    3. GO FUCK YOURSELF");
-        System.out.println("What is your choice?");
-    }
     
-    private static void welcomeCaller(){
-        welcome();
-        int choice = readNum(3, "\nWhat is your choice?");
-        if (choice == 2) {
-            gameInfo();
-            welcomeCaller();
-        } else if(choice == 3){
-            System.out.println("PLAY THE GAME OR GET THE FUCK OUT");
-            System.exit(0);//wat
-        }
-    }
-    
-    private static void gameInfo(){
-        System.out.println("\nDO YOU ENJOY BEING FILTHY RICH?");
-        System.out.println("DO YOU ENJOY BEING DEBT FREE?");
-        System.out.println("DO YOU ENJOY A LIFE FREE OF STUDYING?");
-        System.out.println("DO YOU ENJOY BEING SOBER?");
-        System.out.println("TOO FUCKING BAD");
-        System.out.println("WELCOME TO COLLEGE, FUCKER");
-    }
-    
-    private static int characterSelect(){
-        displayRoles();
-        int choice = readNum(4, "\nWhat is your choice?");
-        if(choice == 4){
-            roleInfo();
-            choice = characterSelect();
-        }
-        return choice;
-    }
-    
-    private static void displayRoles() {
-       System.out.println("\nWHAT DEGREE DO YOU WANT WHEN YOU DIE?");
-       System.out.println("   1. Computer Science");
-       System.out.println("   2. AgriBusiness");
-       System.out.println("   3. English");
-       System.out.println("   4. LEARN ABOUT EACH SHITTY ROLE");
-   }
-
-   private static String nameSelect(String display){
+     private static String nameSelect(String display){
         Scanner scan = new Scanner(System.in);
         
         String name;
@@ -173,7 +185,60 @@ public class College {
         }
         return "";
     }
-  
+    
+    private static void passiveStudy(Player p){
+       if(p.getBooks() == 0){
+          System.out.println("\nYOU AIN'T GOT BOOKS TO BURN");
+          return;
+       }
+       PassiveStudy pS = new PassiveStudy(p);
+       pS.start();
+    }
+    
+    private static void playBlackJack(Player p){
+       Blackjack b = new Blackjack(p);
+       b.start();
+    }
+    
+    //Print before every stop to help guide player on what
+    //minigame should be done
+    private static void printPlayerStats(Player p){
+       System.out.println("YOU HAVE:");
+       System.out.println("BOOZE: \t\t" + p.getAlcohol());
+       System.out.println("BOOKS: \t\t" + p.getBooks());
+       System.out.println("DRUGS: \t\t" + p.getDrugs());
+       System.out.println("FOODS: \t\t" + p.getFood());
+       System.out.println("HEALTH:\t\t" + p.getHealth());
+       System.out.println("KNOWLEDGE:\t" + p.getKnowledge());
+       System.out.println("MONEY: \t\t$" + p.getMoney() + "\n\n");
+    }
+    
+    /**
+    *Reads in user input and verifies that it is a valid number option.
+    *
+    *@param max an integer that specifies the upper bound on the return value.
+    *
+    *@param display a String that is printed when an invalid value is entered.
+    *
+    *return an integer between zero and max+10
+    */
+    public static int readNum(int max, String display){
+      Scanner myScanner = new Scanner(System.in);
+      String input = myScanner.nextLine().trim();
+      
+      try{
+         int val = Integer.parseInt(input);
+         if(val<1 || val>max){
+            System.out.println(display);
+            return readNum(max, display);
+         }
+         return val;
+      }catch(Exception ex){//only occurs when user has garbage input
+         System.out.println(display);
+         return readNum(max, display);
+      }
+   }
+    
     private static void roleInfo(){
         System.out.println("\nComputer Science: FILTHY RICH BUT COLLEGE TAKES FOREVER");
         System.out.println("Agribusiness: YOU'RE A FUCKING FARMER. MEDIOCRE EVERYTHING");
@@ -208,47 +273,6 @@ public class College {
            name3 = scan.nextLine().trim();
         }
         return validateNames(name1, name2, name3);
-    }
-    
-    private static Roommate [] validateNames(String s1, String s2, String s3){
-       System.out.println("\nAre these names correct?");
-       System.out.println("    1. " +s1);
-       System.out.println("    2. " +s2);
-       System.out.println("    3. " +s3);
-       Scanner myScanner = new Scanner(System.in);
-       String response = myScanner.nextLine().trim().toUpperCase();
-       
-       while(! (response.equals("Y") ||response.equals("N") || 
-             response.equals("YES")||response.equals("NO"))){
-          System.out.println("Enter a valid response (YES|NO|Y|N) ");
-          response = myScanner.nextLine().trim().toUpperCase();
-       }
-       
-       if(response.equals("YES") || response.equals("Y")) {
-          Roommate [] roommates = new Roommate[3];
-          roommates[0] = new Roommate(s1);
-          roommates[1] = new Roommate(s2);
-          roommates[2] = new Roommate(s3);
-          return roommates;
-       }else {
-          System.out.println("Which name is incorrect? ");
-          System.out.println("If all names are correct type '4'");
-          int incorrect = readNum(4, "Which name is incorrect?");
-          if(incorrect == 1) {
-              s1 = nameSelect("Enter the new name: ");
-          } else if (incorrect == 2) {
-              s2 = nameSelect("Enter the new name: ");
-          } else if (incorrect == 3){
-              s3 = nameSelect("Enter the new name: ");
-          } else{
-             Roommate [] roommates = new Roommate[3];
-             roommates[0] = new Roommate(s1);
-             roommates[1] = new Roommate(s2);
-             roommates[2] = new Roommate(s3);
-             return roommates;
-          }
-          return validateNames(s1,s2,s3);
-       }
     }
     
     private static void shop(Player player){
@@ -320,73 +344,6 @@ public class College {
         System.out.println("\nNice job blowing your savings, dickhead.\n");
     }
     
-    public static int readNum(int max, String display){
-      Scanner myScanner = new Scanner(System.in);
-      String input = myScanner.nextLine().trim();
-      
-      try{
-         int val = Integer.parseInt(input);
-         if(val<1 || val>max){
-            System.out.println(display);
-            return readNum(max, display);
-         }
-         return val;
-      }catch(Exception ex){//only occurs when user has garbage input
-         System.out.println(display);
-         return readNum(max, display);
-      }
-   }
-    private static void playBlackJack(Player p){
-       Blackjack b = new Blackjack(p);
-       b.start();
-    }
-    private static void doDrugs(Player p){
-       if(p.getDrugs() == 0){
-         System.out.println("\nYOU AIN'T GOT ANY DANK SHIT");
-         return;
-       }
-       Drugs d = new Drugs();
-       d.start();
-    }
-    private static void doParty(Player p){
-       Party theParty = new Party(p);
-       //theParty.start() called by constructor. no need for secondard call
-    }
-    private static void passiveStudy(Player p){
-       if(p.getBooks() == 0){
-          System.out.println("\nYOU AIN'T GOT BOOKS TO BURN");
-          return;
-       }
-       PassiveStudy pS = new PassiveStudy(p);
-       pS.start();
-    }
-    private static void doPiracy(Player p){
-       Piracy pirate = new Piracy(p);
-       pirate.start();
-    }
-    private static void doStudying(Player p){
-       Studying s = new Studying(p);
-       s.start();
-    }
-    
-    private static void talk(Player p){
-       System.out.println("You have no friends.");
-       System.out.println("Morale boost for loneliness. +1 Health.");
-       p.setHealth(p.getHealth() + 1);
-    }
-    
-    //Print before every stop to help guide player on what
-    //minigame should be done
-    private static void printPlayerStats(Player p){
-       System.out.println("YOU HAVE:");
-       System.out.println("BOOZE: \t\t" + p.getAlcohol());
-       System.out.println("BOOKS: \t\t" + p.getBooks());
-       System.out.println("DRUGS: \t\t" + p.getDrugs());
-       System.out.println("FOODS: \t\t" + p.getFood());
-       System.out.println("HEALTH:\t\t" + p.getHealth());
-       System.out.println("KNOWLEDGE:\t" + p.getKnowledge());
-       System.out.println("MONEY: \t\t$" + p.getMoney() + "\n\n");
-    }
     //Returns true || false depending on if student passes
     private static boolean takeTest(Player p, int quarter){
        int knowledge = p.getKnowledge();
@@ -475,4 +432,73 @@ public class College {
        System.out.println("WOOO YOU PASSED, TIME TO GET WASTED");
        return true;//A given that you will pass tes test given that you are smart enough
        }
+    
+    private static void talk(Player p){
+       System.out.println("You have no friends.");
+       System.out.println("Morale boost for loneliness. +1 Health.");
+       p.setHealth(p.getHealth() + 1);
+    }
+    
+    private static Roommate [] validateNames(String s1, String s2, String s3){
+       System.out.println("\nAre these names correct?");
+       System.out.println("    1. " +s1);
+       System.out.println("    2. " +s2);
+       System.out.println("    3. " +s3);
+       Scanner myScanner = new Scanner(System.in);
+       String response = myScanner.nextLine().trim().toUpperCase();
+       
+       while(! (response.equals("Y") ||response.equals("N") || 
+             response.equals("YES")||response.equals("NO"))){
+          System.out.println("Enter a valid response (YES|NO|Y|N) ");
+          response = myScanner.nextLine().trim().toUpperCase();
+       }
+       
+       if(response.equals("YES") || response.equals("Y")) {
+          Roommate [] roommates = new Roommate[3];
+          roommates[0] = new Roommate(s1);
+          roommates[1] = new Roommate(s2);
+          roommates[2] = new Roommate(s3);
+          return roommates;
+       }else {
+          System.out.println("Which name is incorrect? ");
+          System.out.println("If all names are correct type '4'");
+          int incorrect = readNum(4, "Which name is incorrect?");
+          if(incorrect == 1) {
+              s1 = nameSelect("Enter the new name: ");
+          } else if (incorrect == 2) {
+              s2 = nameSelect("Enter the new name: ");
+          } else if (incorrect == 3){
+              s3 = nameSelect("Enter the new name: ");
+          } else{
+             Roommate [] roommates = new Roommate[3];
+             roommates[0] = new Roommate(s1);
+             roommates[1] = new Roommate(s2);
+             roommates[2] = new Roommate(s3);
+             return roommates;
+          }
+          return validateNames(s1,s2,s3);
+       }
+    }
+    
+    private static void welcome(){
+        System.out.println("\nCOLLEGE: A VULGAR OREGON TRAIL ADVENTURE\n");
+        System.out.println("You may:");
+        System.out.println("    1. GET FUCKED BY STUDENT LOANS");
+        System.out.println("    2. LEARN ABOUT GETTING FUCKED BY STUDENT LOANS");
+        System.out.println("    3. GO FUCK YOURSELF");
+        System.out.println("What is your choice?");
+    }
+    
+    private static void welcomeCaller(){
+        welcome();
+        int choice = readNum(3, "\nWhat is your choice?");
+        if (choice == 2) {
+            gameInfo();
+            welcomeCaller();
+        } else if(choice == 3){
+            System.out.println("PLAY THE GAME OR GET THE FUCK OUT");
+            System.exit(0);//wat
+        }
+    }
+    
 }
