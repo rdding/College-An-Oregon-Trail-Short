@@ -18,7 +18,7 @@ public class College {
        
         welcomeCaller();
         degreeChoice = characterSelect();
-        playerName = nameSelect();       
+        playerName = nameSelect("\nWhat is your legal name?(Verified via NSA databases)");       
         roommates = roommateCreate();
         
         if(degreeChoice == 1){
@@ -53,12 +53,12 @@ public class College {
           int year = (quarter / 3) + 1;
           int currentQuarter = (quarter %3) + 1;
           if(prevYear != year){
+             System.out.println("\n-----------------------------------------------");
              System.out.println("YEAR: " + year + "\nQUARTER: " + currentQuarter);
              prevYear = year;
-          }else{
-             System.out.println("QUARTER:" + currentQuarter);
           }
           for(int i = 0; i<5; i++){
+             System.out.println("\n-----------------------------------------------");
              System.out.println("WELCOME TO WEEK " + (i*2));
              printPlayerStats(p);
              displayStopChoices();
@@ -153,21 +153,23 @@ public class College {
        System.out.println("   4. LEARN ABOUT EACH SHITTY ROLE");
    }
 
-   private static String nameSelect(){
+   private static String nameSelect(String display){
         Scanner scan = new Scanner(System.in);
         
         String name;
         boolean isCorrect = true;
         
         while(isCorrect) {
-            System.out.println("\nWhat is your legal name?(Verified via NSA databases)");
+            System.out.println(display);
             name = scan.nextLine();
-            System.out.println("\nIs this name correct? " +name+ "\n");
-            String response = scan.nextLine();
-            if(response.equals("yes") || response.equals("Yes") || response.equals("y") || 
-               response.equals("YES")) {
-                   return name;
-               }
+            if(name.length() != 0){
+               System.out.println("\nIs this name correct? " +name);
+               String response = scan.nextLine();
+               if(response.equals("yes") || response.equals("Yes") || response.equals("y") || 
+                  response.equals("YES")) {
+                      return name;
+                  }
+            }
         }
         return "";
     }
@@ -179,25 +181,32 @@ public class College {
     }
     
     private static Roommate[] roommateCreate(){
-        String name1, name2, name3;
+        String name1 = "";
+        String name2 = "";
+        String name3 = "";
 
         Scanner scan = new Scanner(System.in);
-        System.out.println("\nWhat are the names of your roommates?");
-        System.out.println("    1. ");
-        System.out.println("    2. ");
-        System.out.println("    3. ");
-        name1 = scan.nextLine().trim();
-        System.out.println("\nWhat are the names of your roommates?");
-        System.out.println("    1. " +name1);
-        System.out.println("    2. ");
-        System.out.println("    3. ");
-        name2 = scan.nextLine().trim();
-        System.out.println("\nWhat are the names of your roommates?");
-        System.out.println("    1. " +name1);
-        System.out.println("    2. " +name2);
-        System.out.println("    3. ");
-        name3 = scan.nextLine().trim();
-
+        while(name1.length() == 0){
+           System.out.println("\nWhat are the names of your roommates?");
+           System.out.println("    1. ");
+           System.out.println("    2. ");
+           System.out.println("    3. ");
+           name1 = scan.nextLine().trim();
+        }
+        while(name2.length() == 0){
+           System.out.println("\nWhat are the names of your roommates?");
+           System.out.println("    1. " +name1);
+           System.out.println("    2. ");
+           System.out.println("    3. ");
+           name2 = scan.nextLine().trim();
+        }
+        while(name3.length() == 0){
+           System.out.println("\nWhat are the names of your roommates?");
+           System.out.println("    1. " +name1);
+           System.out.println("    2. " +name2);
+           System.out.println("    3. ");
+           name3 = scan.nextLine().trim();
+        }
         return validateNames(name1, name2, name3);
     }
     
@@ -223,16 +232,14 @@ public class College {
           return roommates;
        }else {
           System.out.println("Which name is incorrect? ");
-          System.out.println("If all names are correct->(4)");
+          System.out.println("If all names are correct type '4'");
           int incorrect = readNum(4, "Which name is incorrect?");
-          System.out.println("Enter the new name: ");
-          String newName = myScanner.nextLine().trim();
           if(incorrect == 1) {
-              s1 = newName;
+              s1 = nameSelect("Enter the new name: ");
           } else if (incorrect == 2) {
-              s2 = newName;
+              s2 = nameSelect("Enter the new name: ");
           } else if (incorrect == 3){
-              s3 = newName;
+              s3 = nameSelect("Enter the new name: ");
           } else{
              Roommate [] roommates = new Roommate[3];
              roommates[0] = new Roommate(s1);
@@ -310,22 +317,22 @@ public class College {
         player.setDrugs(player.getDrugs() + drugs/20);
         player.setFood(player.getFood() + food/5);
         player.setMoney(player.getMoney() - total);
-        System.out.println("\nNice job blowing your savings, dickhead.");
+        System.out.println("\nNice job blowing your savings, dickhead.\n");
     }
     
     public static int readNum(int max, String display){
-      System.out.println(display);
       Scanner myScanner = new Scanner(System.in);
       String input = myScanner.nextLine().trim();
       
       try{
          int val = Integer.parseInt(input);
          if(val<1 || val>max){
-            System.out.println("Try again");
+            System.out.println(display);
             return readNum(max, display);
          }
          return val;
       }catch(Exception ex){//only occurs when user has garbage input
+         System.out.println(display);
          return readNum(max, display);
       }
    }
@@ -364,13 +371,13 @@ public class College {
     //minigame should be done
     private static void printPlayerStats(Player p){
        System.out.println("YOU HAVE:");
-       System.out.println("BOOZE: \t" + p.getAlcohol());
-       System.out.println("BOOKS: \t" + p.getBooks());
-       System.out.println("DRUGS: \t" + p.getDrugs());
-       System.out.println("FOODS: \t" + p.getFood());
-       System.out.println("HEALTH: \t" + p.getHealth());
-       System.out.println("KNOWLEDGE \t" + p.getKnowledge());
-       System.out.println("MONEY: \t$" + p.getMoney() + "\n\n");
+       System.out.println("BOOZE: \t\t" + p.getAlcohol());
+       System.out.println("BOOKS: \t\t" + p.getBooks());
+       System.out.println("DRUGS: \t\t" + p.getDrugs());
+       System.out.println("FOODS: \t\t" + p.getFood());
+       System.out.println("HEALTH:\t\t" + p.getHealth());
+       System.out.println("KNOWLEDGE:\t" + p.getKnowledge());
+       System.out.println("MONEY: \t\t$" + p.getMoney() + "\n\n");
     }
     //Returns true || false depending on if student passes
     private static boolean takeTest(Player p, int quarter){
@@ -378,11 +385,11 @@ public class College {
        int knowledgeNeeded = (int) (Math.pow(1.05, quarter) * quarter *100);
        System.out.println("It'S TIME TO GET FUCKED BY FINALS!");
        System.out.print("You have " + knowledge + " knowledge points");
-       System.out.println("To barely pass you need " + knowledgeNeeded + " know");
+       System.out.println("\nTo barely pass you need " + knowledgeNeeded + " know");
        int adderallBump = knowledge/10;
        int adderallCost = (int) (10 * (Math.random() + 1));
        System.out.println("TAKE ADDERALL???? ");
-       System.out.println("\tThe cost would be " + adderallCost);
+       System.out.println("The cost would be $" + adderallCost);
        char [] options = {'Y','N'};
        char choice = Blackjack.getValidChar(options);
        if(choice == 'Y'){
@@ -398,6 +405,7 @@ public class College {
              }
           }else{
              System.out.println("Adderall Taken...");
+             p.setMoney(p.getMoney()-adderallCost);
              int rand = (int) (Math.random() *10);
              if(rand <2){
                 System.out.println("\tIt wasn't very effective...");
@@ -412,7 +420,7 @@ public class College {
           }
        }
        if(knowledge<knowledgeNeeded){
-          System.out.println("BRIBE THE PROF????");
+          System.out.println("\nBRIBE THE PROF????");
           choice = Blackjack.getValidChar(options);
           if(choice == 'Y'){
              System.out.println("CAN'T BUY GRADES, FUCKER");
@@ -430,13 +438,13 @@ public class College {
           if(diff>100){
              diff = 99;
           }
-          System.out.println("ChanceS of getting caught are " + diff + "%.");
+          System.out.println("Chances of getting caught are " + diff + "%.");
           choice = Blackjack.getValidChar(options);
           if(choice == 'Y'){
              int rand = (int) (Math.random()*100);
              if(rand<diff){
                 System.out.println("GOT CAUGHT, BITCH");
-                System.out.println("YOU BEGGED TO BE FAILED, BUT THEY GAVE YOU PITY");
+                System.out.println("YOU BEGGED TO BE EXPELLED, BUT THEY GAVE YOU PITY");
                 return false;
              }else{
                 int cheatingSkill = (int) (Math.random() *10);
