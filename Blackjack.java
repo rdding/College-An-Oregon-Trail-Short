@@ -13,6 +13,11 @@ public class Blackjack implements Minigame{
    private int handsPlayed;
    private long startTime;
    
+   /**
+    * Constructor for the blackjack game taking in a player and storing some of the players
+    * starting values as instance variables
+    * @param p - Player. the player of the main character that user controls
+    */
    public Blackjack(Player p){
       this.p = p;
       startingCapital = p.getMoney();
@@ -49,6 +54,9 @@ public class Blackjack implements Minigame{
       }
 
    }
+   /**
+    * public method specified by the minigame interface to start the games
+    */
    @Override
    public void start() {
       if(p != null && deck != null){
@@ -109,6 +117,9 @@ public class Blackjack implements Minigame{
                      dealerHand.add(deck[cardPtr++]);
                      printOpenHands(dealerHand,playerHand);                
                   }
+                  if(outcome == 1){
+                     break;
+                  }
                   int playerMax = getMaxLegal(playerHand);
                   int dealerMax = getMaxLegal(dealerHand);
                   if(playerMax >dealerMax){
@@ -135,6 +146,9 @@ public class Blackjack implements Minigame{
       }
    }
 
+   /**
+    * Method speciified by the minigame interface called by the start method when the game is done.
+    */
    @Override
    public void exit() {
       System.out.println("--------------------------------------------------");
@@ -321,6 +335,13 @@ public class Blackjack implements Minigame{
       printHand(playerHand);
       System.out.println("--------------------------------------------------");
    }
+   /**
+    * A method to get a valid char given an array of valid chars. Note public status
+    * allows other methods to make call on this method.
+    * 
+    * @param arr - array of valid chars that the user can input
+    * @return char - a valid char specified in the given array
+    */
    public static char getValidChar(char []arr){
       Scanner myScanner = new Scanner(System.in);
       String s = myScanner.nextLine().trim().toUpperCase();
