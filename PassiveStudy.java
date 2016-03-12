@@ -1,9 +1,17 @@
 
 public class PassiveStudy implements Minigame{
    private Player p;
+   
+   /**
+    * Constructor for the PassiveStudy object to be used in stops.
+    * @param p - Player that will be making the stop
+    */
    public PassiveStudy(Player p){
       this. p = p;
    }
+   /**
+    * Method found in minigame interface implemented to do the protocol for the object.
+    */
    @Override
    public void start() {
       if(p.getBooks()>0){
@@ -74,6 +82,10 @@ public class PassiveStudy implements Minigame{
       p.setKnowledge(p.getKnowledge()+knowledgeChange);
       System.out.println("You now have " + p.getKnowledge() + " knowledge.");
    }
+   /**
+    * Method in the interface of Minigame that is not implemented or used
+    * in this class
+    */
    @Override
    public void exit() {//no code here. not required here     
    }
