@@ -73,7 +73,7 @@ public class Party implements Minigame{
    private boolean doTheAlcohol(){
       int bad = getChanceBadTime();
       int rand = ((int) Math.random() * 100);
-      return(rand<bad);
+      return(bad<rand);
    }
    
    private void printStats(){
@@ -93,8 +93,6 @@ public class Party implements Minigame{
       System.out.println("You ended the night with a BAC of "  + bac + "!!!");
       System.out.println("--------------------------------------------------");
       System.out.println("----------------leaving the party-----------------");
-      System.out.println("--------------------------------------------------");
-      
+      System.out.println("--------------------------------------------------");      
    }
-
 }
