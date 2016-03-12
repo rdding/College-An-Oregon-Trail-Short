@@ -100,6 +100,7 @@ public class Blackjack implements Minigame{
                   System.out.println("Player - Hit");
                   playerHand.add(deck[cardPtr++]);
                   if(getLowScore(playerHand)>21){
+                     printOpenHands(dealerHand, playerHand);
                      System.out.println("You went over. BUST");
                      outcome = 2;
                      break;
@@ -117,7 +118,13 @@ public class Blackjack implements Minigame{
                      dealerHand.add(deck[cardPtr++]);
                      printOpenHands(dealerHand,playerHand);                
                   }
-                  if(outcome == 1){
+                  if(getLowScore(dealerHand)>21){
+                     printOpenHands(dealerHand,playerHand); 
+                     System.out.println("Dealer went over. DEALER BUST");
+                     outcome = 1;
+                     break;
+                  }
+                  if(outcome !=-1){
                      break;
                   }
                   int playerMax = getMaxLegal(playerHand);
