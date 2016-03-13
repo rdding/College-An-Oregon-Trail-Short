@@ -64,6 +64,7 @@ public class Piracy implements Minigame{
             p.setMoney(p.getMoney()-1);
          }else{
             System.out.println("You die of dysentry :(");
+            p.die(false);
          }
       }else{
          System.out.println("Your dorm was raided by the FBI");
