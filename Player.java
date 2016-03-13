@@ -187,10 +187,16 @@ public class Player {
      * @param isAlive - true if player has degree false if die midway
      */
     public void die(boolean isAlive){
+       if(isAlive){
+          System.out.println("CONGRATULATIONS, "+getPlayerName()+
+                             ", YOU GRADUATED WITH A SHITTY DEGREE");
+          System.out.println("WELCOME TO THE REAL WORLD, JACKASS.");
+       }else{
         System.out.println("CONGRATULATIONS, YOU PLAYED YOURSELF.");
         System.out.println("YOUR TOMBSTONE READS:");
         System.out.println("HERE LIES: " +getPlayerName());
         System.out.println("REMEMBERED BY NO ONE.");
-        System.exit(0);
+       }
+       System.exit(0);
     }
 }
