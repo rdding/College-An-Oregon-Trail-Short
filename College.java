@@ -43,9 +43,7 @@ public class College {
         System.out.println("You have $" +player.getMoney() + " in cash.");
         shop(player);
         gameLoop(player, degreeLength, money, roommates, playerName);
-        System.out.println("CONGRATULATIONS, YOU GRADUATED WITH A SHITTY DEGREE");
-        System.out.println("WELCOME TO THE REAL WORLD, JACKASS.");
-        System.exit(0);
+        player.die(true);
     }
     
     private static int characterSelect(){
@@ -85,6 +83,14 @@ public class College {
        p.setDrugs(p.getDrugs()-1);
        Drugs d = new Drugs();
        d.start();
+       int overdose = (int)(Math.random() * 10);
+       if(overdose < 2){
+          System.out.println("OVERDOSED LIKE THE DRUGGIE YOU ARE");
+          p.die(false);
+       }
+       System.out.println("WOOO GOT HIGH. +20 KNOWLEDGE & +20 HEALTH");
+       p.setKnowledge(p.getKnowledge() + 20);
+       p.setHealth(p.getHealth() + 20);
     }
     
     private static void doParty(Player p){
@@ -154,6 +160,7 @@ public class College {
                 System.out.println("BITCH, YOU'RE STARVING. -10 Health");
                 p.setHealth(p.getHealth()-10);
                 if(p.getHealth() < 0){
+                   System.out.println("YOU DIED THE NOBLE DEATH OF AN ETHIOPIAN TODDLER.");
                    p.die(false);
                 }
              } else {
