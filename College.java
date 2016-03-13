@@ -103,6 +103,73 @@ public class College {
        pirate.start();
     }
     
+    private static void doRoommates(Player p){
+       int rmAlive = 0;
+       for(int i = 0; i < 3; i++){
+          if(p.getRoommate(i).getIsAlive()){
+             rmAlive++;
+          }
+       }
+       if(rmAlive == 0){
+          return;
+       } else {
+         Roommate[] live = new Roommate[rmAlive];
+         int index = 0;
+         for(int i = 0; i < 3; i++){
+            if(p.getRoommate(i).getIsAlive()){
+               live[index] = p.getRoommate(i);
+               index++;
+            }
+         }
+         int randRM = (int)(Math.random()*rmAlive);
+         String rmName = live[randRM].getName();
+         int option = (int)(Math.random()*100);
+         if(option < 2){
+            live[randRM].isDead();
+            System.out.println(rmName+ " has died from meningitis.");
+            System.out.println("The dorm is now quieter...");
+            System.out.println("SO STUDYING IS EASIER WOOOO. +100 Knowledge");
+            p.setKnowledge(p.getKnowledge() + 100);
+         } else if(option < 10){
+            int randGood = (int)(Math.random()*7);
+            int randGet = (int)(Math.random()*100) + 1;
+            if(randGood == 0){
+               System.out.println(rmName+ " brought back booze. +" +randGet+ " alcohol");
+               p.setAlcohol(p.getAlcohol() + randGet);
+            }else if(randGood == 1){
+               System.out.println(rmName+ " jacked some books. +" +randGet+ " books");
+               p.setBooks(p.getBooks() + randGet);
+            }else if(randGood == 2){
+               System.out.println(rmName+ " mugged the drug dealer. +" +randGet+ " drugs");
+               p.setDrugs(p.getDrugs() + randGet);
+            }else if(randGood == 3){
+               System.out.println(rmName+ " robbed Trader Joes. +" +randGet+ " food");
+               p.setFood(p.getFood() + randGet);
+            }else if(randGood == 4){
+               System.out.println(rmName+ " injected you with heroin in your sleep. +" 
+                                  +randGet+ " health");
+               p.setHealth(p.getHealth() + randGet);
+            }else if(randGood == 5){
+               System.out.println(rmName+ " blackmailed your professor. +" +randGet+ " knowledge");
+               p.setKnowledge(p.getKnowledge() + randGet);
+            }else{
+               System.out.println(rmName+ " robbed the University Store. +" +randGet+ " money");
+               p.setMoney(p.getMoney() + randGet);
+            }
+         } else if(option < 40){
+            System.out.println(rmName+ 
+                               " beat the shit out of you in a drunken stupor. -20 health.");
+            p.setHealth(p.getHealth() - 20);
+            if (p.getHealth() < 0){
+               System.out.println("You have been 4stocked by " +rmName);
+               p.die(false);
+            }
+         } else{
+            return;
+         }
+       }
+    }
+    
     private static void doStop(Player p, int choice){
        if(choice == 1){
           doParty(p);
@@ -166,6 +233,7 @@ public class College {
              } else {
                 p.setFood(p.getFood()-1);
              }
+             doRoommates(p);
              printPlayerStats(p);
              displayStopChoices();
              int choice = readNum(8, "What do you want to do??");
