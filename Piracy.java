@@ -47,7 +47,7 @@ public class Piracy implements Minigame{
    public void exit() {
       System.out.println("--------------------------------------------------");
       System.out.println("--------------------------------------------------");
-      System.out.print("You pirated " +(p.getBooks()-startingTextbooks) + " books" );
+      System.out.println("You pirated " +(p.getBooks()-startingTextbooks) + " books" );
       if ( (p.getMoney()-moneyStarting) != 0){
          System.out.println("!!!!You lost " +(moneyStarting - p.getMoney() ) + " dollars!!!!");
       }
