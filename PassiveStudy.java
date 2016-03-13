@@ -18,7 +18,7 @@ public class PassiveStudy implements Minigame{
          System.out.println("You have " + p.getBooks() + " to study with");
          
          System.out.print("How many books would you like to use to study with?");
-         System.out.println("(0 - " + p.getBooks() + ")" );
+         System.out.println("(1 - " + p.getBooks() + ")" );
          int booksUsed = College.readNum(p.getBooks(), "HOW MANY BOOKS?");
          if(booksUsed >0){
             System.out.print("Because of your books you gained + " + booksUsed + " knowledge");
@@ -42,13 +42,13 @@ public class PassiveStudy implements Minigame{
             }
             printKnowledge(loseKnowledge);
          }else if(rand2 == 1){
-            System.out.println("You got distracted by the clouds. no studying happened");
+            System.out.println("You got distracted by the clouds. No studying happened");
             System.out.println("No change in knowldege.");
          }else if(rand2 == 2){
-            System.out.println("You could't study because you had to do landry.");
+            System.out.println("You could't study because you had to do laundry.");
             System.out.print("No change in knowledge.");
          }else if(rand2 == 3){
-            System.out.println("You were drafter into the third world war.");
+            System.out.println("You were drafted into the third world war.");
             System.out.println("Unfortunately you did not survive...");
             p.die(false);
          }else{
@@ -56,7 +56,7 @@ public class PassiveStudy implements Minigame{
             p.die(false);
          }
       }else if(rand ==2){
-         System.out.println("You had an incredible study sesison.");
+         System.out.println("You had an incredible study session.");
          printKnowledge(25);
       }else{
          printKnowledge(10);

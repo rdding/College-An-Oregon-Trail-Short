@@ -82,6 +82,7 @@ public class College {
          System.out.println("\nYOU AIN'T GOT ANY DANK SHIT");
          return;
        }
+       p.setDrugs(p.getDrugs()-1);
        Drugs d = new Drugs();
        d.start();
     }

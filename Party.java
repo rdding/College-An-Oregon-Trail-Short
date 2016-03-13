@@ -14,6 +14,7 @@ public class Party implements Minigame{
       if(p.getAlcohol() ==0){
          System.out.println("You have no alcohol. leave");
       }
+      starthealth = p.getHealth();
       bac = 0;
       drinksHad = 0;
       this.start();
@@ -30,6 +31,7 @@ public class Party implements Minigame{
          char [] options = {'Y','N'};
          char choice = Blackjack.getValidChar(options);
          if(choice == 'Y'){
+            p.setAlcohol(p.getAlcohol()-1);
             drinksHad++;
             boolean success = doTheAlcohol();
             if(success){
@@ -86,7 +88,7 @@ public class Party implements Minigame{
    }
    
    private void printStats(){
-      System.out.println("You have " + p.getHealth());
+      System.out.println("You have " + p.getHealth() + " health.");
       System.out.println("You have " + bac + "% bac.");
       System.out.print("Chance of having a bad time " + getChanceBadTime() + "%");
    }

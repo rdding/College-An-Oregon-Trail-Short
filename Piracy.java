@@ -69,7 +69,7 @@ public class Piracy implements Minigame{
          System.out.println("Your dorm was raided by the FBI");
          System.out.println("... while your roomates are making drugs");
          System.out.println("--a firefight ensues--");
-         System.out.println("Unfortunately you were shoot and killed...\n RIP");
+         System.out.println("Unfortunately you were shot and killed...\n RIP in peace");
          p.die(false);
       }
       

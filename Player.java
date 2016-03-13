@@ -34,7 +34,7 @@ public class Player {
         drugs = 0;
         food = 0;
         health = 100;
-        knowledge = 0;
+        knowledge = 10;
         this.money = money;
         this.name = name;
         progression = 0;
