@@ -108,15 +108,17 @@ public class Blackjack implements Minigame{
                }else{// player stand
                   endOfGame = true;
                   printOpenHands(dealerHand,playerHand);
-                  while(this.getHighScore(dealerHand)<17){
-                     if(getLowScore(dealerHand)>21){
-                        printOpenHands(dealerHand,playerHand); 
-                        System.out.println("Dealer went over. DEALER BUST");
-                        outcome = 1;
-                        break;
-                     }
+                  int dealerScore = this.getHighScore(dealerHand);
+                  if(dealerScore>21){
+                     dealerScore = this.getLowScore(dealerHand);
+                  }
+                  while(dealerScore<17){
                      dealerHand.add(deck[cardPtr++]);
-                     printOpenHands(dealerHand,playerHand);                
+                     printOpenHands(dealerHand,playerHand);       
+                     dealerScore = this.getHighScore(dealerHand);
+                     if(dealerScore>21){
+                        dealerScore = this.getLowScore(dealerHand);
+                     }
                   }
                   if(getLowScore(dealerHand)>21){
                      printOpenHands(dealerHand,playerHand); 
