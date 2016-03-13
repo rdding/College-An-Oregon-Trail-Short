@@ -57,9 +57,9 @@ public class PassiveStudy implements Minigame{
          }
       }else if(rand ==2){
          System.out.println("You had an incredible study session.");
-         printKnowledge(25);
+         printKnowledge(20);
       }else{
-         printKnowledge(10);
+         printKnowledge(5);
       }
       System.out.println("Studying hurts. Health -20");
       p.setHealth(p.getHealth()-20);
@@ -75,9 +75,9 @@ public class PassiveStudy implements Minigame{
    }
    private void printKnowledge(int knowledgeChange){
       if(knowledgeChange<0){
-         System.out.println("LOSE: " + knowledgeChange + " Knowledge points!");
+         System.out.println("\nLOSE: " + knowledgeChange + " Knowledge points!");
       }else{
-         System.out.println("GAIN: " + knowledgeChange + " Knowledge points!");
+         System.out.println("\nGAIN: " + knowledgeChange + " Knowledge points!");
       }
       p.setKnowledge(p.getKnowledge()+knowledgeChange);
       System.out.println("You now have " + p.getKnowledge() + " knowledge.");

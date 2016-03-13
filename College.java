@@ -258,7 +258,7 @@ public class College {
         
         while(isCorrect) {
             System.out.println(display);
-            name = scan.nextLine();
+            name = scan.nextLine().trim();
             if(name.length() != 0){
                System.out.println("\nIs this name correct? " +name);
                String response = scan.nextLine().toUpperCase().trim();
