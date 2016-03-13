@@ -193,11 +193,10 @@ public class College {
             name = scan.nextLine();
             if(name.length() != 0){
                System.out.println("\nIs this name correct? " +name);
-               String response = scan.nextLine();
-               if(response.equals("yes") || response.equals("Yes") || response.equals("y") || 
-                  response.equals("YES")) {
-                      return name;
-                  }
+               String response = scan.nextLine().toUpperCase().trim();
+               if(response.equals("YES") || response.equals("Y") ){
+                  return name;
+               }
             }
         }
         return "";
