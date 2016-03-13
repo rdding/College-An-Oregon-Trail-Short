@@ -14,7 +14,7 @@ public class Party implements Minigame{
       if(p.getAlcohol() ==0){
          System.out.println("You have no alcohol. leave");
       }
-      starthealth = p.getHealth();
+      startHealth = p.getHealth();
       bac = 0;
       drinksHad = 0;
       this.start();

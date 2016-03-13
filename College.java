@@ -150,6 +150,15 @@ public class College {
           for(int i = 0; i<5; i++){
              System.out.println("\n-----------------------------------------------");
              System.out.println("WELCOME TO WEEK " + (i*2));
+             if(p.getFood() == 0){
+                System.out.println("BITCH, YOU'RE STARVING. -10 Health");
+                p.setHealth(p.getHealth()-10);
+                if(p.getHealth() < 0){
+                   p.die(false);
+                }
+             } else {
+                p.setFood(p.getFood()-1);
+             }
              printPlayerStats(p);
              displayStopChoices();
              int choice = readNum(8, "What do you want to do??");
