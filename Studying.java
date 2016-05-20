@@ -401,7 +401,7 @@ public class Studying implements Minigame{
          }
       }
       System.out.println("TYPE \"" + capped +"\" Exactly...(without the quotes)");
-      Scanner myScanner = new Scanner(System.in);
+      Scanner myScanner = MyIOHandler.inputScanner;
       String userInput = myScanner.nextLine().trim();
       if(userInput.equals(capped)){
          System.out.println("CONGRATULATIONS, you did it right");

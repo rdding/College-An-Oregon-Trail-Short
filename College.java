@@ -6,7 +6,9 @@
 */
 import java.util.Scanner;
 
+
 public class College {
+
    /**
    *Runs the game.
    *
@@ -251,8 +253,7 @@ public class College {
     }
     
      private static String nameSelect(String display){
-        Scanner scan = new Scanner(System.in);
-        
+        Scanner scan = MyIOHandler.inputScanner;
         String name;
         boolean isCorrect = true;
         
@@ -307,7 +308,7 @@ public class College {
     *@return an integer between zero and max+10
     */
     public static int readNum(int max, String display){
-      Scanner myScanner = new Scanner(System.in);
+      Scanner myScanner = MyIOHandler.inputScanner;
       String input = myScanner.nextLine().trim();
       
       try{
@@ -334,7 +335,7 @@ public class College {
         String name2 = "";
         String name3 = "";
 
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = MyIOHandler.inputScanner;
         while(name1.length() == 0){
            System.out.println("\nWhat are the names of your roommates?");
            System.out.println("    1. ");
@@ -528,7 +529,7 @@ public class College {
        System.out.println("    1. " +s1);
        System.out.println("    2. " +s2);
        System.out.println("    3. " +s3);
-       Scanner myScanner = new Scanner(System.in);
+       Scanner myScanner = MyIOHandler.inputScanner;
        String response = myScanner.nextLine().trim().toUpperCase();
        
        while(! (response.equals("Y") ||response.equals("N") || 

@@ -183,12 +183,11 @@ public class Blackjack implements Minigame{
       
    }
    private int getBet(){
-      Scanner myScanner = new Scanner(System.in);
-      Scanner verifyInt;
+      Scanner myScanner = MyIOHandler.inputScanner;
       System.out.println("How much would you like to wager?");
       System.out.print("You have " + p.getMoney() + " dollars.\n");
       String s = myScanner.nextLine().trim();
-      verifyInt = new Scanner(s);
+      Scanner verifyInt = new Scanner(s);
       while(!verifyInt.hasNextInt()){
          System.out.println("How much would you like to wager?");
          System.out.print("You have " + p.getMoney() + " dollars.\n");
@@ -352,7 +351,7 @@ public class Blackjack implements Minigame{
     * @return char - a valid char specified in the given array
     */
    public static char getValidChar(char []arr){
-      Scanner myScanner = new Scanner(System.in);
+      Scanner myScanner = MyIOHandler.inputScanner;
       String s = myScanner.nextLine().trim().toUpperCase();
       while(s.length() != 1){
          System.out.println("Please input one of the following chars: " + Arrays.toString(arr));
